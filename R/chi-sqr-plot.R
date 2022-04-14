@@ -42,7 +42,7 @@ chi_pic <- function(dataset){
   rownames(upper_tri)=colnames(dataset)
 
 
-  melted_ut=melt(upper_tri, na.rm = T)
+  melted_ut=reshape2::melt(upper_tri, na.rm = T)
 
 
   temp_plot <-ggplot(data = melted_ut, aes(x=Var1, y=Var2, fill=value,text = paste(
@@ -68,3 +68,4 @@ chi_pic <- function(dataset){
   ggplotly(temp_plot, tooltip = "text")
 
 }
+
