@@ -12,4 +12,5 @@ file<-separate(file,Attribute,c("Attribute","year"),sep = -4)
 file<-separate(file,Area_name,c("Area_name","state"),sep = ",")
 file$Area_name <- gsub(" County","", file$Area_name)
 file$year=as.numeric(file$year)
+return(file)
 }
