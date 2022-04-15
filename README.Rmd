@@ -53,7 +53,7 @@ database %>%
   scale_color_discrete("Select state vs US")+
   xlab(paste("year"))+ylab("Unemployment rate")
 
-##Chi
+## Correlation plot
 chi_pic[file[,6:7]]
 
 ##Unemployment_rate
