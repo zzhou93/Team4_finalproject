@@ -1,32 +1,28 @@
-#' Plot the unemployment rate in county level for a specific state and a year
+#' Plot the median house hold income in county level for a specific state in 2019
 #' @param file the file path.
-#' @param yr the select year.
+#' @param yr 2019.
 #' @param State.name the chosen state.
 #' @return a ggplot figure
 #' @export
 #' @examples
 #' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 #'
-#' plotunemployed(file, 2018, "NJ")
-#' @author Xiaolan Wan
+#' plotunemployed(file, 2019, "NJ")
+#' @author Lin Quan
 #' @import tidyverse sf usmap
 #'
 #'
-plotunemployed <- function(file, yr, State.name)
+plot_medianhouseholdincome <- function(file, yr=2019, State.name)
 {
   # summarize unemployment
-  if(State.name %in% as.character(levels(as.factor(file$State))) & yr <= 2020 & yr >= 2000){
-    database <- file %>% filter(Attribute == "Unemployed_") %>%
+  if(State.name %in% as.character(levels(as.factor(file$State))) & yr == 2019){
+    database <- file %>% filter(Attribute == "Median_Household_Income_") %>%
       filter(State == State.name) %>% filter(year==yr) %>% filter(!is.na(state)) %>%
       mutate(percent=round(100*Value/sum(Value), 2)) %>%
       arrange(Area_name)
   } else if(!State.name %in% as.character(levels(as.factor(file$State))))
   {
     print("Error! Not a state!")
-    return()
-  } else if(yr < 2000 | yr > 2020)
-  {
-    print("Error! Year beyond the ranage, the input should in [2000, 2020]")
     return()
   }
 
@@ -60,4 +56,6 @@ plotunemployed <- function(file, yr, State.name)
     scale_fill_manual(values = c("#1155b6", "#67b5e3", "#cccccc", "#ffada2", "#ed4747"), guide = guide_none()) +
     theme_void() + theme(legend.position='none')
 }
+
+
 

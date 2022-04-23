@@ -11,5 +11,8 @@ localunemployrate<-function(file,local.name){
   if (local.name %in% as.character(levels(as.factor(file$Area_name)))) {
     data <- file%>% filter(	Attribute=="Unemployment_rate_")%>%
       filter(Area_name %in% c(local.name,"United States"))%>%filter(is.na(state))
+
   }else print("Not a suitable Area name")
 }
+
+time<-localunemployrate(data,"Texas")

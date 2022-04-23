@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Lab3package
+# final
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -25,7 +25,7 @@ The goal of Lab3package is to draw country maps and plotting the lines.
 You can install the development version of Lab3package like so:
 
 ``` r
-# install.packages("Lab3package")
+# install.packages("finalproject")
 ```
 
 ## Example
@@ -33,7 +33,7 @@ You can install the development version of Lab3package like so:
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(tidyverse)
+
 library(finalproject)
 ## data
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
@@ -53,11 +53,17 @@ database %>%
   scale_color_discrete("Select state vs US")+
   xlab(paste("year"))+ylab("Unemployment rate")
 
-## Correlation plot
-chi_pic[file[,6:7]]
+
 
 ##Unemployment_rate
 plotunemployed(file, 2018, "NJ")
+
+##Unemployment_rate
+plotunemployed_time(file,"Texas")
+
+#Median household income in 2019
+plot_medianhouseholdincome(file,2019,"NJ")
+
 
 ```
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
