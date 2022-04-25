@@ -9,12 +9,28 @@
 #' @author Zirou Zhou
 #' @import tidyverse
 stateunemployed<-function(file, yr, State.name){
+  if (yr %in% as.numeric(levels(as.factor(file$year)))){
+
   if (State.name %in% as.character(levels(as.factor(file$State)))){
     database <- file%>% filter(Attribute=="Unemployed_")%>%
       filter(State==State.name)%>%filter(year==yr)%>% filter(!is.na(state))%>%
       mutate(percent=round(100*Value/sum(Value),2))%>%
       mutate(county_percent=paste(Area_name,percent,"%"))%>%
       arrange(desc(Value))%>%slice(1:10)
-  }else  {print("Not a state")}
-}
+    dtatbase%>%
+      ggplot(aes(x=Area_name,y=Value,fill=county_percent))+geom_col()+
+      scale_fill_discrete("Percent of Population")+
+      xlab(paste("Top 10 County of Chosen State"))+ylab("Population")
+  }else if(!State.name %in% as.character(levels(as.factor(file$State))))
+  {
+    print("Error! Not a state!")
+    return()
+  }
+  }else if(!yr %in% as.numeric(levels(as.factor(file$year))))
+  {
+    print("Error! Not a valid year!")
+    return()
+  }
 
+
+  }
