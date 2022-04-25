@@ -13,16 +13,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-# final
+# finalproject
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of Lab3package is to draw country maps and plotting the lines.
+The goal of finalproject is to draw country maps and plotting the lines.
 
 ## Installation
 
-You can install the development version of Lab3package like so:
+You can install the development version of finalproject like so:
 
 ``` r
 # install.packages("finalproject")
@@ -54,7 +54,7 @@ plotunemployed(file, 2018, "NJ")
 plotunemployed_time(file,"Texas")
 
 #Median household income in 2019
-plot_medianhouseholdincome(file,2019,"LA")
+plotmedianhouseholdincome(file,"LA")
 
 
 ```
