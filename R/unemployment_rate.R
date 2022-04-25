@@ -15,7 +15,7 @@
 plotunemployed <- function(file, yr, State.name)
 {
   # summarize unemployment
-  if(State.name %in% as.character(levels(as.factor(file$State))) & yr <= 2020 & yr >= 2000){
+  if(State.name %in% as.character(levels(as.factor(file$State))) & yr <= 2021 & yr >= 2000){
     database <- file %>% filter(Attribute == "Unemployment_rate_") %>%
       filter(State == State.name) %>% filter(year==yr) %>% "["(-1,) %>%
       mutate(percent= Value) %>%
@@ -24,9 +24,9 @@ plotunemployed <- function(file, yr, State.name)
   {
     print("Error! Not a state!")
     return()
-  } else if(yr < 2000 | yr > 2020)
+  } else if(yr < 2000 | yr > 2021)
   {
-    print("Error! Year beyond the ranage, the input should in [2000, 2020]")
+    print("Error! Year beyond the ranage, the input should in [2000, 2021]")
     return()
   }
   
