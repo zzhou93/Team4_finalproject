@@ -40,18 +40,10 @@ file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.cs
 str(file)
 ## plot 
 
-database <- stateunemployed(file,2011,"IA")
+## top 10 umemploy county
+stateunemployed(file,2011,"IA")
 
-database %>%  
-  ggplot(aes(x=Area_name,y=Value,fill=county_percent))+geom_col()+
-    scale_fill_discrete("Percent of Population")+
-    xlab(paste("Top 10 County of Chosen State"))+ylab("Population")
 
-database <- localunemployrate(file,"Texas")
-database %>%
-  ggplot(aes(year,Value,color=Area_name))+geom_point()  +geom_line()+
-  scale_color_discrete("Select state vs US")+
-  xlab(paste("year"))+ylab("Unemployment rate")
 
 
 
