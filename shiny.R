@@ -15,7 +15,7 @@ dataclean<- function(url){
   return(file)
 }
 
-
+#setwd("~/Documents/GitHub/Team4_finalproject")
 files.sources = paste("R/", list.files("R/"), sep = "")
 sapply(files.sources, source)
 
