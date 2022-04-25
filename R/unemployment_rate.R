@@ -15,24 +15,23 @@
 plotunemployed <- function(file, yr, State.name)
 {
   # summarize unemployment
-  if(State.name %in% as.character(levels(as.factor(file$State))) & yr <= 2021 & yr >= 2000){
+  if(State.name %in% as.character(levels(as.factor(file$State))) & yr <= 2020 & yr >= 2000){
     database <- file %>% filter(Attribute == "Unemployment_rate_") %>%
       filter(State == State.name) %>% filter(year==yr) %>% "["(-1,) %>%
-      mutate(percent= Value) %>%
       arrange(Area_name)
   } else if(!State.name %in% as.character(levels(as.factor(file$State))))
   {
     print("Error! Not a state!")
     return()
-  } else if(yr < 2000 | yr > 2021)
+  } else if(yr < 2000 | yr > 2020)
   {
-    print("Error! Year beyond the ranage, the input should in [2000, 2021]")
+    print("Error! Year beyond the ranage, the input should in [2000, 2020]")
     return()
   }
-  
+
   database <- database %>%
-    mutate(level = cut(percent, breaks = c(0, 2, 4, 6, 8, 100), labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
-  
+    mutate(level = cut(Value, breaks = c(0, 2, 4, 6, 8, 100), labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
+
   colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc", "Low" = "#67b5e3", "VeryLow" = "#1155b6")
   # get map data
   d <- us_map("counties") %>% filter(abbr == State.name)
@@ -41,21 +40,29 @@ plotunemployed <- function(file, yr, State.name)
   d$group <- d$county
   d <- d %>% arrange(group)
 
+  if(State.name == "AK")
+  {
+    tmp <- database %>% filter(Area_name == "Valdez-Cordova Census Area")
+    database <- database %>% add_row(FIPS_Code = 2063, State = "AK", Area_name = "Chugach Census Area",
+                                     state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
+      add_row(FIPS_Code = 2066, State = "AK", Area_name = "Copper River Census Area",
+              state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
+      filter(Area_name != "Valdez-Cordova Census Area")
+  }
   if(State.name == "AK" & yr < 2010)
   {
-    database <- database %>% add_row(FIPS_Code = 2015, State = "AK", Area_name = "Hoonah-Angoon Census Area", 
-                         state = "AK", Attribute = database$Attribute[1], Value = NA, percent = NA) %>% 
-      add_row(FIPS_Code = 2195, State = "AK", Area_name = "Petersburg Census Area", 
-              state = "AK", Attribute = database$Attribute[1], Value = NA, percent = NA) %>% 
-      arrange(Area_name)
-    
+    database <- database %>% add_row(FIPS_Code = 2015, State = "AK", Area_name = "Hoonah-Angoon Census Area",
+                                     state = "AK", Attribute = database$Attribute[1], Value = NA) %>%
+      add_row(FIPS_Code = 2195, State = "AK", Area_name = "Petersburg Census Area",
+              state = "AK", Attribute = database$Attribute[1], Value = NA)
   } else if(State.name == "HI")
   {
-    database <- database %>% add_row(FIPS_Code = 5005, State = "HI", Area_name = "Kalawao County", 
-                                     state = "HI", Attribute = database$Attribute[1], Value = NA, percent = NA) %>% 
-      arrange(Area_name)
+    database <- database %>% add_row(FIPS_Code = 5005, State = "HI", Area_name = "Kalawao County",
+                                     state = "HI", Attribute = database$Attribute[1], Value = NA)
   }
-  
+
+  database <- database %>% arrange()
+
   USS <- lapply(split(d, d$county), function(x) {
     if(length(table(x$piece)) == 1)
     {
@@ -73,8 +80,10 @@ plotunemployed <- function(file, yr, State.name)
 
   ggplot() + geom_sf(data = tmp) +
     geom_sf(aes(fill = level, alpha = 0.4), color = "white",  data = tmp) +
-    geom_sf_text(aes(label = percent, geometry = centroids), colour = "black", size = 4.5, data = tmp) +
-    scale_fill_manual(values = colorvalues, guide = guide_none()) + 
-    ggtitle(paste("Unemployment Rate In", State.name, "In Year", yr)) + 
+    geom_sf_text(aes(label = Value, geometry = centroids), colour = "black", size = 4.5, data = tmp) +
+    scale_fill_manual(values = colorvalues, guide = guide_none()) +
+    ggtitle(paste("Unemployment Rate In", State.name, "In Year", yr)) +
     theme_void() + theme(legend.position='none', plot.title = element_text(hjust = 0.5))
 }
+
+
