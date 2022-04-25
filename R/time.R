@@ -15,4 +15,3 @@ localunemployrate<-function(file,local.name){
   }else print("Not a suitable Area name")
 }
 
-time<-localunemployrate(data,"Texas")
