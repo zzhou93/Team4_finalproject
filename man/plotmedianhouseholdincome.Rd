@@ -18,6 +18,8 @@ a mapping figure
 Plot the 2019 median household income in county level for a specific state.
 }
 \examples{
+file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+
 plotmedianhouseholdincome(file, "NJ")
 }
 \author{

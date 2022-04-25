@@ -20,6 +20,8 @@ top 10 unemployed county histogram
 read csv file from USDA site and clean up.
 }
 \examples{
+file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+
 stateunemployed(file, 2011, "IA")
 }
 \author{
