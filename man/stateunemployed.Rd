@@ -23,5 +23,5 @@ read csv file from USDA site and clean up.
 stateunemployed(file, 2011, "IA")
 }
 \author{
-Zirou Zhou
+Zirou Zhou Lin Quan
 }

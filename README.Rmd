@@ -33,7 +33,7 @@ You can install the development version of Lab3package like so:
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-
+library(tidyverse)
 library(finalproject)
 ## data
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
@@ -54,7 +54,7 @@ plotunemployed(file, 2018, "NJ")
 plotunemployed_time(file,"Texas")
 
 #Median household income in 2019
-plot_medianhouseholdincome(file,2019,"NJ")
+plot_medianhouseholdincome(file,2019,"LA")
 
 
 ```

@@ -7,33 +7,52 @@
 #' @examples
 #' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 #'
-#' plotunemployed(file, 2019, "NJ")
+#' plot_medianhouseholdincome(file, 2019, "NJ")
 #' @author Lin Quan
-#' @import tidyverse sf usmap
-#'
+#' @import tidyverse
+#' @import sf
+#' @import usmap
 #'
 plot_medianhouseholdincome <- function(file, yr=2019, State.name)
 {
   # summarize unemployment
   if(State.name %in% as.character(levels(as.factor(file$State))) & yr == 2019){
     database <- file %>% filter(Attribute == "Median_Household_Income_") %>%
-      filter(State == State.name) %>% filter(year==yr) %>% filter(!is.na(state)) %>%
-      mutate(percent=round(100*Value/sum(Value), 2)) %>%
+      filter(State == State.name) %>% filter(year==yr) %>% "["(-1,) %>%
       arrange(Area_name)
   } else if(!State.name %in% as.character(levels(as.factor(file$State))))
   {
     print("Error! Not a state!")
     return()
   }
-
   database <- database %>%
-    mutate(level = cut(percent, breaks = c(0, 1, 3, 5, 8, 100), labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
+    mutate(level = cut(Value, breaks = c(0,24000, 40000, 53000, 70000, 150000), labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
 
+  colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc", "Low" = "#67b5e3", "VeryLow" = "#1155b6")
   # get map data
   d <- us_map("counties") %>% filter(abbr == State.name)
-  d$county <- substr(d$county, 1, nchar(d$county) - 7)
+  if(!State.name %in% c("AK"))
+    d$county <- substr(d$county, 1, nchar(d$county) - 7)
   d$group <- d$county
   d <- d %>% arrange(group)
+
+  if(State.name == "AK")
+  {
+    tmp <- database %>% filter(Area_name == "Valdez-Cordova Census Area")
+    database <- database %>% add_row(FIPS_Code = 2063, State = "AK", Area_name = "Chugach Census Area",
+                                     state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
+      add_row(FIPS_Code = 2066, State = "AK", Area_name = "Copper River Census Area",
+              state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
+      filter(Area_name != "Valdez-Cordova Census Area")
+  }
+   else if(State.name == "HI")
+  {
+    database <- database %>% add_row(FIPS_Code = 5005, State = "HI", Area_name = "Kalawao County",
+                                     state = "HI", Attribute = database$Attribute[1], Value = NA)
+
+  }
+
+  database <- database %>% arrange()
 
   USS <- lapply(split(d, d$county), function(x) {
     if(length(table(x$piece)) == 1)
@@ -52,10 +71,14 @@ plot_medianhouseholdincome <- function(file, yr=2019, State.name)
 
   ggplot() + geom_sf(data = tmp) +
     geom_sf(aes(fill = level, alpha = 0.4), color = "white",  data = tmp) +
-    geom_sf_text(aes(label = percent, geometry = centroids), colour = "black", size = 4.5, data = tmp) +
-    scale_fill_manual(values = c("#1155b6", "#67b5e3", "#cccccc", "#ffada2", "#ed4747"), guide = guide_none()) +
-    theme_void() + theme(legend.position='none')
+    geom_sf_text(aes(label = Value, geometry = centroids), colour = "black", size = 3.5, data = tmp) +
+    scale_fill_manual(values = colorvalues, guide = guide_none()) +
+    ggtitle(paste("Median household income in", State.name, "In 2019")) +
+    theme_void() + theme(legend.position='none', plot.title = element_text(hjust = 0.5))
 }
+
+
+
 
 
 

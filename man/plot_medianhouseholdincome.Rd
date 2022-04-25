@@ -22,7 +22,7 @@ Plot the median house hold income in county level for a specific state in 2019
 \examples{
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 
-plotunemployed(file, 2019, "NJ")
+plot_medianhouseholdincome(file, 2019, "NJ")
 }
 \author{
 Lin Quan
