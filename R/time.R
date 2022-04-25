@@ -8,12 +8,19 @@
 #' @author Zirou Zhou
 #' @import tidyverse
 localunemployrate<-function(file,local.name){
-  if (local.name %in% as.character(levels(as.factor(file$Area_name)))) {
-    data <- file%>% filter(	Attribute=="Unemployment_rate_")%>%
-      filter(Area_name %in% c(local.name,"United States"))%>%filter(is.na(state))%>%
-      ggplot(aes(x=Area_name,y=Value,fill=county_percent))+geom_col()+
-      scale_fill_discrete("Percent of Population")+xlab("Top 10 County of Chosen State")+
-      ylab("Population")+ggtitle(paste("Unemployerate of", local.name))
-    }else print("Not a suitable Area name")
+  file<-file%>%filter(is.na(state))
+  if (!local.name %in% as.character(levels(as.factor(file$Area_name)))) {
+      print("Error! Not a state!")
+    return()
+  }else if(local.name %in% as.character(levels(as.factor(file$Area_name)))){
+      data <- file%>% filter(	Attribute=="Unemployment_rate_")%>%
+        filter(Area_name %in% c(local.name,"United States"))
+      data%>%
+        ggplot(aes(year,Value,color=Area_name))+geom_point()  +geom_line()+
+        scale_color_discrete("Select state vs US")+
+        xlab(paste("year"))+ylab("Unemployment rate")+
+        ggtitle(paste("Unemployment rate of",local.name,"vs the Whole nation, from 2000-2020"))
+    }
+
   }
 
