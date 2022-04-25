@@ -1,6 +1,6 @@
 #' Plot the unemployment rate along with years
 #' @param file the file path.
-#' @param local.name the chosen local.
+#' @param local.name the chosen area
 #' @return a ggplot figure
 #' @export
 #' @examples
@@ -31,12 +31,10 @@ plotunemployed_time <- function(file, local.name){
       theme(
         plot.title = element_text(size = 18, face = "bold"),
         axis.text = element_text(size = 9))+ scale_color_discrete(paste0(local.name," vs US"))+
-      ggtitle(paste("Unemployment rate of",local.name,"vs the Whole nation"))
+      ggtitle(paste("Unemployment rate of",local.name,"vs the Whole nation"))+
+      xlab(paste("Year"))+ylab("Unemployment rate")
     ### plotly
-    ggplotly(temp_plot,tooltip = "text") %>%
-      layout(
-             xaxis = list(title="Year"), yaxis = list(title="Unemployment rate (%)"),
-             margin=list(t=-10))
+    ggplotly(temp_plot,tooltip = "text")
   }
 
 }

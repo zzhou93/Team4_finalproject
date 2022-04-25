@@ -9,7 +9,7 @@ plotunemployed_time(file, local.name)
 \arguments{
 \item{file}{the file path.}
 
-\item{local.name}{the chosen local.}
+\item{local.name}{the chosen area}
 }
 \value{
 a ggplot figure

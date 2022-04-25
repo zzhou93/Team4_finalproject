@@ -1,23 +1,18 @@
-#' Plot the median household incomein county level for a specific state in2 019
+#' Plot the 2019 median household income in county level for a specific state.
 #' @param file the file path.
-#' @param yr 2019
-#' @param State.name the chosen state.
-#' @return a ggplot figure
+#' @param State.name the selected state.
+#' @return a mapping figure
 #' @export
 #' @examples
-#' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
-#'
-#' plot_medianhouseholdincome(file, 2019, "NJ")
+#' plotmedianhouseholdincome(file, "NJ")
 #' @author Lin Quan
 #' @import tidyverse sf usmap
-#'
-#'
-plot_medianhouseholdincome <- function(file, yr=2019, State.name)
+plotmedianhouseholdincome <- function(file, State.name)
 {
   # summarize unemployment
-  if(State.name %in% as.character(levels(as.factor(file$State))) & yr == 2019){
+  if(State.name %in% as.character(levels(as.factor(file$State))) ){
     database <- file %>% filter(Attribute == "Median_Household_Income_") %>%
-      filter(State == State.name) %>% filter(year==yr) %>% "["(-1,) %>%
+      filter(State == State.name) %>% filter(year==2019) %>% "["(-1,) %>%
       arrange(Area_name)
   } else if(!State.name %in% as.character(levels(as.factor(file$State))))
   {
@@ -45,13 +40,7 @@ plot_medianhouseholdincome <- function(file, yr=2019, State.name)
               state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
       filter(Area_name != "Valdez-Cordova Census Area")
   }
-  if(State.name == "AK" & yr < 2010)
-  {
-    database <- database %>% add_row(FIPS_Code = 2015, State = "AK", Area_name = "Hoonah-Angoon Census Area",
-                                     state = "AK", Attribute = database$Attribute[1], Value = NA) %>%
-      add_row(FIPS_Code = 2195, State = "AK", Area_name = "Petersburg Census Area",
-              state = "AK", Attribute = database$Attribute[1], Value = NA)
-  } else if(State.name == "HI")
+ if(State.name == "HI")
   {
     database <- database %>% add_row(FIPS_Code = 5005, State = "HI", Area_name = "Kalawao County",
                                      state = "HI", Attribute = database$Attribute[1], Value = NA)
