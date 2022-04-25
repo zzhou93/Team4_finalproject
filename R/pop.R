@@ -17,7 +17,7 @@ stateunemployed<-function(file, yr, State.name){
       mutate(percent=round(100*Value/sum(Value),2))%>%
       mutate(county_percent=paste(Area_name,percent,"%"))%>%
       arrange(desc(Value))%>%slice(1:10)
-    dtatbase%>%
+    database%>%
       ggplot(aes(x=Area_name,y=Value,fill=county_percent))+geom_col()+
       scale_fill_discrete("Percent of Population")+
       xlab(paste("Top 10 County of Chosen State"))+ylab("Population")
