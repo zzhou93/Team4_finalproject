@@ -1,12 +1,14 @@
 ---
 output: github_document
-always_allow_html: true
+
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
+
 knitr::opts_chunk$set(
+  echo = TRUE,
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
@@ -43,19 +45,25 @@ str(file)
 
 # plot 
 
-## top 10 unemployed county histogram
-stateunemployed(file,2011,"IA")
+
 
 ## The unemployment rate in county level for a specific state and a year
 plotunemployed(file, 2018, "NJ")
 
-## The unemployment rate along with years
-plotunemployed_time(file,"Texas")
+
 
 ## 2019 median household income in county level for a specific state.
 plotmedianhouseholdincome(file,"NJ")
 
 
+```
+
+```{r eval=knitr::is_html_output()}
+## top 10 unemployed county histogram
+stateunemployed(file,2011,"IA")
+
+## The unemployment rate along with years
+plotunemployed_time(file,"Texas")
 ```
 You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
 
