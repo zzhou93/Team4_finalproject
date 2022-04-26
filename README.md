@@ -58,6 +58,10 @@ plotmedianhouseholdincome(file,"NJ")
 <img src="man/figures/README-example-2.png" width="100%" />
 
 ``` r
+library(forcats)
+library(dplyr)
+library(ggplot2)
+library(plotly)
 ## top 10 unemployed county histogram
 stateunemployed(file,2011,"IA")
 
