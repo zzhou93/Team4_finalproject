@@ -10,9 +10,12 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    tidyverse,
+    dplyr,
+    ggplot2,
     sf (>= 1.0.0),
-    usmap,
+    datasets,
+    utils,
+    usmap (>= 0.6.0),
     plotly,
     tidyr
 RoxygenNote: 7.1.2

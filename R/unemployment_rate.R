@@ -5,21 +5,21 @@
 #' @return a ggplot figure
 #' @export
 #' @examples
-#' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+#' # file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 #'
-#' plotunemployed(file, 2018, "NJ")
+#' # plotunemployed(file, 2018, "NJ")
 #' @author Xiaolan Wan
-#' @import tidyverse sf usmap
+#' @import dplyr tidyr ggplot2 sf usmap datasets
 #'
 #'
 plotunemployed <- function(file, yr, State.name)
 {
   # summarize unemployment
-  if(State.name %in% as.character(levels(as.factor(file$State))) & yr <= 2020 & yr >= 2000){
-    database <- file %>% filter(Attribute == "Unemployment_rate_") %>%
-      filter(State == State.name) %>% filter(year==yr) %>% "["(-1,) %>%
+  if(State.name %in% state.abb & yr <= 2020 & yr >= 2000){
+    database <- file %>% dplyr::filter(Attribute == "Unemployment_rate_") %>%
+      dplyr::filter(State == State.name) %>% dplyr::filter(year==yr) %>% "["(-1,) %>%
       arrange(Area_name)
-  } else if(!State.name %in% as.character(levels(as.factor(file$State))))
+  } else if(!State.name %in% state.abb)
   {
     print("Error! Not a state!")
     return()
@@ -34,7 +34,7 @@ plotunemployed <- function(file, yr, State.name)
 
   colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc", "Low" = "#67b5e3", "VeryLow" = "#1155b6")
   # get map data
-  d <- us_map("counties") %>% filter(abbr == State.name)
+  d <- us_map("counties") %>% dplyr::filter(abbr == State.name)
   if(!State.name %in% c("AK"))
     d$county <- substr(d$county, 1, nchar(d$county) - 7)
   d$group <- d$county
@@ -42,12 +42,12 @@ plotunemployed <- function(file, yr, State.name)
 
   if(State.name == "AK")
   {
-    tmp <- database %>% filter(Area_name == "Valdez-Cordova Census Area")
+    tmp <- database %>% dplyr::filter(Area_name == "Valdez-Cordova Census Area")
     database <- database %>% add_row(FIPS_Code = 2063, State = "AK", Area_name = "Chugach Census Area",
                                      state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
       add_row(FIPS_Code = 2066, State = "AK", Area_name = "Copper River Census Area",
               state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
-      filter(Area_name != "Valdez-Cordova Census Area")
+      dplyr::filter(Area_name != "Valdez-Cordova Census Area")
   }
   if(State.name == "AK" & yr < 2010)
   {
