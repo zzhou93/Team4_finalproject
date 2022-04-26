@@ -21,8 +21,7 @@ plotunemployed_time <- function(file, local.name){
       filter(Area_name %in% c(local.name,"United States"))%>%
       spread(Attribute,Value)
 
-    #temp_plot <-
-      database %>% ggplot(aes(year,Unemployment_rate_,group=1,text = paste('Area: ', State,
+    temp_plot <-database %>% ggplot(aes(year,Unemployment_rate_,group=1,text = paste('Area: ', State,
                                                                                       '<br>Year: ', year,
                                                                                       '<br>Employment: ', Employed_,
                                                                                       '<br>Unemployment: ', Unemployed_,
@@ -34,7 +33,7 @@ plotunemployed_time <- function(file, local.name){
       ggtitle(paste("Unemployment rate of",local.name,"vs the Whole nation"))+
       xlab(paste("Year"))+ylab("Unemployment rate")
     ### plotly
-    #ggplotly(temp_plot,tooltip = "text")
+    plotly::ggplotly(temp_plot,tooltip = "text")
   }
 
 }

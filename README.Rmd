@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -18,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of finalproject is to draw country maps and plotting the lines.
+The goal of finalproject is to visualize unemployed rate and household income compare with time across United States.
 
 ## Installation
 
@@ -33,24 +34,26 @@ You can install the development version of finalproject like so:
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(tidyverse)
+
 library(finalproject)
-## data
+
+## data cleaning
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 str(file)
-## plot 
 
-## top 10 umemploy county
+# plot 
+
+## top 10 unemployed county histogram
 stateunemployed(file,2011,"IA")
 
-##Unemployment_rate
+## The unemployment rate in county level for a specific state and a year
 plotunemployed(file, 2018, "NJ")
 
-##Unemployment_rate
+## The unemployment rate along with years
 plotunemployed_time(file,"Texas")
 
-#Median household income in 2019
-plotmedianhouseholdincome(file,"LA")
+## 2019 median household income in county level for a specific state.
+plotmedianhouseholdincome(file,"NJ")
 
 
 ```
