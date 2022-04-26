@@ -6,6 +6,8 @@
 #' dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 #' @author Zirou Zhou
 #' @import dplyr tidyr utils
+#' @import tidyr
+#'
 dataclean<- function(url){
 file=read.csv(url)
 file<-separate(file,Attribute,c("Attribute","year"),sep = -4)

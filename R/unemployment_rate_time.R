@@ -8,8 +8,7 @@
 #'
 #' plotunemployed_time(file, "Texas")
 #' @author Lin Quan Zirou Zhou
-#' @import tidyverse plotly
-#'
+#' @import tidyr ggplot2
 #'
 plotunemployed_time <- function(file, local.name){
 
@@ -34,7 +33,7 @@ plotunemployed_time <- function(file, local.name){
       ggtitle(paste("Unemployment rate of",local.name,"vs the Whole nation"))+
       xlab(paste("Year"))+ylab("Unemployment rate")
     ### plotly
-    ggplotly(temp_plot,tooltip = "text")
+    #ggplotly(temp_plot,tooltip = "text")
   }
 
 }

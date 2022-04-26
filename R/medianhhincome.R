@@ -8,7 +8,7 @@
 #'
 #' plotmedianhouseholdincome(file, "NJ")
 #' @author Lin Quan
-#' @import tidyverse sf usmap
+#' @import sf usmap dplyr ggplot2
 #'
 #'
 plotmedianhouseholdincome <- function(file, State.name)

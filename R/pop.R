@@ -9,7 +9,7 @@
 #'
 #' stateunemployed(file, 2011, "IA")
 #' @author Zirou Zhou Lin Quan
-#' @import tidyverse
+#' @import dplyr ggplot2 forcats
 stateunemployed<-function(file, yr, State.name){
   if (yr %in% as.numeric(levels(as.factor(file$year)))){
 
@@ -35,7 +35,7 @@ stateunemployed<-function(file, yr, State.name){
             axis.text = element_text(size = 9),
             panel.grid.major = element_blank())+ggtitle(paste("Top 10 unemployed county in",State.name))
 
-    ggplotly(temp_plot,tooltip = "text")
+    #ggplotly(temp_plot,tooltip = "text")
   }else if(!State.name %in% as.character(levels(as.factor(file$State))))
   {
     print("Error! Not a state!")
