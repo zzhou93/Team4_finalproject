@@ -4,9 +4,13 @@
 #' @return a mapping figure
 #' @export
 #' @examples
+#' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+#'
 #' plotmedianhouseholdincome(file, "NJ")
 #' @author Lin Quan
 #' @import tidyverse sf usmap
+#'
+#'
 plotmedianhouseholdincome <- function(file, State.name)
 {
   # summarize unemployment

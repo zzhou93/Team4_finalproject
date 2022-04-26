@@ -5,6 +5,8 @@
 #' @return top 10 unemployed county histogram
 #' @export
 #' @examples
+#' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+#'
 #' stateunemployed(file, 2011, "IA")
 #' @author Zirou Zhou Lin Quan
 #' @import tidyverse
