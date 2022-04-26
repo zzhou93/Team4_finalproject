@@ -9,7 +9,7 @@
 #'
 #' plotunemployed(file, 2018, "NJ")
 #' @author Xiaolan Wan
-#' @import tidyverse sf usmap
+#' @import sf usmap dplyr ggplot2
 #'
 #'
 plotunemployed <- function(file, yr, State.name)

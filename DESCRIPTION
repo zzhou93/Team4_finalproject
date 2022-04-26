@@ -14,5 +14,8 @@ Imports:
     sf (>= 1.0.0),
     usmap,
     plotly,
-    tidyr
+    tidyr,
+    ggplot2,
+    dplyr,
+    forcats
 RoxygenNote: 7.1.2
