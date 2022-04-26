@@ -43,10 +43,6 @@ str(file)
 ## top 10 umemploy county
 stateunemployed(file,2011,"IA")
 
-
-
-
-
 ##Unemployment_rate
 plotunemployed(file, 2018, "NJ")
 

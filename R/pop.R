@@ -22,7 +22,8 @@ stateunemployed<-function(file, yr, State.name){
       mutate(county_percent=paste(Area_name,percent,"%"))%>%
       arrange(desc(Value))%>%slice(1:10)
 
-    temp_plot<-database%>%
+   # temp_plot<-
+      database%>%
       ggplot(aes(x=fct_reorder(Area_name, percent, .desc = TRUE),y=Value,fill=county_percent,text = paste('County: ', Area_name,
                                                                                                     '<br>Unemployment: ', Value,
                                                                                                     '<br>percentage: ', percent,"%")))+

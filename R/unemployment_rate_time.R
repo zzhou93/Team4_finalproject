@@ -21,7 +21,8 @@ plotunemployed_time <- function(file, local.name){
       filter(Area_name %in% c(local.name,"United States"))%>%
       spread(Attribute,Value)
 
-    temp_plot <- database %>% ggplot(aes(year,Unemployment_rate_,group=1,text = paste('Area: ', State,
+    #temp_plot <-
+      database %>% ggplot(aes(year,Unemployment_rate_,group=1,text = paste('Area: ', State,
                                                                                       '<br>Year: ', year,
                                                                                       '<br>Employment: ', Employed_,
                                                                                       '<br>Unemployment: ', Unemployed_,

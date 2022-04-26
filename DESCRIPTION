@@ -18,7 +18,5 @@ Imports:
     usmap (>= 0.6.0),
     plotly,
     tidyr,
-    ggplot2,
-    dplyr,
     forcats
 RoxygenNote: 7.1.2
