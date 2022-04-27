@@ -5,9 +5,9 @@
 #' @return a ggplot figure
 #' @export
 #' @examples
-#' # file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+#' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 #'
-#' # plotunemployed(file, 2018, "NJ")
+#' plotunemployed(file, 2018, "NJ")
 #' @author Xiaolan Wan
 #' @import dplyr tidyr ggplot2 sf usmap datasets
 #' @import sf usmap dplyr ggplot2

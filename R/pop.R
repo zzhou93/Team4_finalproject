@@ -1,4 +1,4 @@
-#' read csv file from USDA site and clean up.
+#' Plot top 10 unemployed county histogram in selected state and a year
 #' @param file the file path.
 #' @param yr the select year.
 #' @param State.name the chosen state.
