@@ -20,7 +20,7 @@ Plot the unemployment rate along with years
 \examples{
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 
-plotunemployed_time(file, "Texas")
+plotunemployed_time(file, "IA")
 }
 \author{
 Lin Quan Zirou Zhou

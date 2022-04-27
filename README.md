@@ -58,16 +58,18 @@ plotmedianhouseholdincome(file,"NJ")
 <img src="man/figures/README-example-2.png" width="100%" />
 
 ``` r
-library(forcats)
-library(dplyr)
-library(ggplot2)
-library(plotly)
 ## top 10 unemployed county histogram
 stateunemployed(file,2011,"IA")
-
-## The unemployment rate along with years
-plotunemployed_time(file,"Texas")
 ```
+
+<img src="man/figures/README-example-3.png" width="100%" />
+
+``` r
+## The unemployment rate along with years
+plotunemployed_time(file,"IA")
+```
+
+<img src="man/figures/README-example-4.png" width="100%" />
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date. `devtools::build_readme()` is handy for this. You could also

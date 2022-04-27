@@ -24,7 +24,7 @@ stateunemployed<-function(file, yr, State.name){
       mutate(county_percent=paste(Area_name,percent,"%"))%>%
       arrange(desc(Value))%>%slice(1:10)
 
-   temp_plot<-database%>%
+  database%>%
       ggplot(aes(x=fct_reorder(Area_name, percent, .desc = TRUE),y=Value,fill=county_percent,text = paste('County: ', Area_name,
                                                                                                     '<br>Unemployment: ', Value,
                                                                                                     '<br>percentage: ', percent,"%")))+
@@ -33,11 +33,11 @@ stateunemployed<-function(file, yr, State.name){
       theme_minimal(base_size = 9.5) +
       xlab(paste("Top 10 County of Chosen State"))+ylab("Unemployment population")+scale_fill_manual(values = c(rep("#9ecae1", 10))) +
       theme(legend.position = "none",
-            plot.title = element_text(size = 18, face = "bold"),
-            axis.text = element_text(size = 9),
+            plot.title = element_text(size = 10, face = "bold"),
+            axis.text = element_text(size = 6),
             panel.grid.major = element_blank())+ggtitle(paste("Top 10 unemployed county in",State.name))
 
-   plotly::ggplotly(temp_plot,tooltip = "text")
+  # plotly::ggplotly(temp_plot,tooltip = "text")
   }else if(!State.name %in% as.character(levels(as.factor(file$State))))
   {
     print("Error! Not a state!")
