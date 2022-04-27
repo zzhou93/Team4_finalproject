@@ -2,7 +2,7 @@
 % Please edit documentation in R/pop.R
 \name{stateunemployed}
 \alias{stateunemployed}
-\title{read csv file from USDA site and clean up.}
+\title{Plot top 10 unemployed county histogram in selected state and a year}
 \usage{
 stateunemployed(file, yr, State.name)
 }
@@ -17,7 +17,7 @@ stateunemployed(file, yr, State.name)
 top 10 unemployed county histogram
 }
 \description{
-read csv file from USDA site and clean up.
+Plot top 10 unemployed county histogram in selected state and a year
 }
 \examples{
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")

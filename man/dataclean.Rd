@@ -16,7 +16,8 @@ cleaned data.
 read csv file from USDA site and clean up.
 }
 \examples{
-dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+file <-dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+str(file)
 }
 \author{
 Zirou Zhou

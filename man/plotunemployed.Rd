@@ -20,9 +20,9 @@ a ggplot figure
 Plot the unemployment rate in county level for a specific state and a year
 }
 \examples{
-# file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 
-# plotunemployed(file, 2018, "NJ")
+plotunemployed(file, 2018, "NJ")
 }
 \author{
 Xiaolan Wan
