@@ -71,7 +71,7 @@ plotmedianhouseholdincome <- function(file, State.name)
     geom_sf(aes(fill = level, alpha = 0.4), color = "white",  data = tmp) +
     geom_sf_text(aes(label = Value, geometry = centroids), colour = "black", size = 3, data = tmp) +
     scale_fill_manual(values = colorvalues, guide = guide_none()) +
-    ggtitle(paste("Median household income in", State.name, "In 2019")) +
+    ggtitle(paste("Median household income in", State.name, "in 2019")) +
     theme_void() + theme(legend.position='none', plot.title = element_text(hjust = 0.5,size = 14, face = "bold"))
 }
 

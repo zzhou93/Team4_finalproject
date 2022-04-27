@@ -31,7 +31,7 @@ stateunemployed<-function(file, yr, State.name){
 
       geom_bar(stat = "identity") +
       theme_minimal(base_size = 9.5) +
-      xlab(paste("Top 10 County of Chosen State"))+ylab("Unemployment population")+scale_fill_manual(values = c(rep("#9ecae1", 10))) +
+      xlab(paste("Top 10 county of chosen ctate"))+ylab("Unemployment population")+scale_fill_manual(values = c(rep("#9ecae1", 10))) +
       theme(legend.position = "none",
             plot.title = element_text(size = 10, face = "bold"),
             axis.text = element_text(size = 6),

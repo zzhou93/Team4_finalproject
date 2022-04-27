@@ -83,7 +83,7 @@ plotunemployed <- function(file, yr, State.name)
     geom_sf(aes(fill = level, alpha = 0.4), color = "white",  data = tmp) +
     geom_sf_text(aes(label = Value, geometry = centroids), colour = "black", size = 4.5, data = tmp) +
     scale_fill_manual(values = colorvalues, guide = guide_none()) +
-    ggtitle(paste("Unemployment Rate In", State.name, "In Year", yr)) +
+    ggtitle(paste("Unemployment rate in", State.name, "in year", yr)) +
     theme_void() + theme(legend.position='none', plot.title = element_text(hjust = 0.5,size = 18, face = "bold"))
 }
 
