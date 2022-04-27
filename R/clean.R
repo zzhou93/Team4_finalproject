@@ -3,7 +3,8 @@
 #' @return cleaned data.
 #' @export
 #' @examples
-#' dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+#' file <-dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+#' str(file)
 #' @author Zirou Zhou
 #' @import dplyr tidyr utils
 #' @import tidyr
