@@ -59,7 +59,7 @@ plotmedianhouseholdincome(file,"NJ")
 stateunemployed(file,2011,"IA")
 
 ## The unemployment rate along with years
-plotunemployed_time(file,"Iowa")
+plotunemployed_time(file,"IA")
 
 ```
 
