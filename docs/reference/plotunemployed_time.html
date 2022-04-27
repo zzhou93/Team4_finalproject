@@ -67,8 +67,9 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">file</span><span class="op">=</span><span class="fu"><a href="dataclean.html">dataclean</a></span><span class="op">(</span><span class="st">"https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv"</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">plotunemployed_time</span><span class="op">(</span><span class="va">file</span>, <span class="st">"Texas"</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ggplot(., aes(year, Unemployment_rate_, group = 1, text = paste("Area: ",     State, "&lt;br&gt;Year: ", year, "&lt;br&gt;Employment: ", Employed_,     "&lt;br&gt;Unemployment: ", Unemployed_, "&lt;br&gt;Unemployment rate: ",     Unemployment_rate_, "%"), color = Area_name)):</span> could not find function "ggplot"</span>
+<span class="r-in"><span class="fu">plotunemployed_time</span><span class="op">(</span><span class="va">file</span>, <span class="st">"IA"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Error! Not a state!"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 </code></pre></div>
     </div>
   </div>
@@ -79,7 +80,7 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by The package maintainer.</p>
+  <p></p><p>Developed by Lin Quan.</p>
 </div>
 
 <div class="pkgdown">

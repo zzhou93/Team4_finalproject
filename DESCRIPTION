@@ -3,9 +3,8 @@ Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
 Author: Lin Quan, Xiaolan Wan, Zirou Zhou
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Maintainer: Lin Quan, Xiaolan Wan, Zirou Zhou
+Description: The data of unemployment and household income for the U.S. States is publicly available on USDA. We create an R package and a shiny app to visualize unemployed rate and household income spatially and temporally across United States.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

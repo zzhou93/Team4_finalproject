@@ -1,6 +1,6 @@
 ---
 output: github_document
-
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -59,7 +59,7 @@ plotmedianhouseholdincome(file,"NJ")
 stateunemployed(file,2011,"IA")
 
 ## The unemployment rate along with years
-plotunemployed_time(file,"IA")
+plotunemployed_time(file,"Iowa")
 
 ```
 
