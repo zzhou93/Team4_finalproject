@@ -1,0 +1,52 @@
+---
+title: "USDA database Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{USDA database Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(finalproject)
+```
+
+
+``Data clean`` 
+```{r}
+#about one page?#
+file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+str(file)
+```
+
+
+``Mapping the data``
+```{r}
+#about two pages?#
+## The unemployment rate in county level for a specific state and a year
+plotunemployed(file, 2018, "NJ")
+
+
+
+## 2019 median household income in county level for a specific state.
+plotmedianhouseholdincome(file,"NJ")
+```
+
+``Plot and portly``
+```{r}
+#about one page about plot and 2 pages about the shiny app?#
+## top 10 unemployed county histogram
+stateunemployed(file,2011,"IA")
+
+## The unemployment rate along with years
+plotunemployed_time(file,"IA")
+
+```
+
