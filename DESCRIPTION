@@ -3,7 +3,7 @@ Type: Package
 Title: visualize unemployed rate and household income
 Version: 0.1.0
 Author: Lin Quan, Xiaolan Wan, Zirou Zhou
-Maintainer: Lin Quan <Joe.Developer@some.domain.net>
+Maintainer: Lin Quan <linquan@iastate.edu>
 Description: We create an R package and a shiny app to visualize unemployed rate 
   and household income spatially and temporally across United States.
 License: GPL-3
@@ -18,8 +18,10 @@ Imports:
     usmap (>= 0.6.0),
     plotly,
     tidyr,
-    forcats
+    forcats,
+    shiny
 RoxygenNote: 7.1.2
+Depends: R (>= 3.5.0)
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

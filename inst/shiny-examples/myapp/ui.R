@@ -52,7 +52,7 @@ shinyUI(navbarPage(theme=shinytheme("flatly"), collapsible=TRUE,
                                               top=80, left=5, width=200, fixed=TRUE,
                                               draggable=TRUE, height="auto",
                                               selectInput("Area",
-                                                          label=h5("Select one place:"),
+                                                          label=h5("Select one state:"),
                                                           choices = c(StateList), selected = "IA"
                                               ), # end of selectInput1 for place
 
