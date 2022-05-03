@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# finalproject
+# unemployedR
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of finalproject is to visualize unemployed rate and household
+The goal of unemployedR is to visualize unemployed rate and household
 income compare with time across United States.
 
 ## Installation
