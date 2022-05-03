@@ -14,7 +14,7 @@ income compare with time across United States.
 You can install the development version of finalproject like so:
 
 ``` r
-# install.packages("finalproject")
+# install.packages("unemployedR")
 ```
 
 ## Example
@@ -22,7 +22,7 @@ You can install the development version of finalproject like so:
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-library(finalproject)
+library(unemployedR)
 
 ## data cleaning
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
