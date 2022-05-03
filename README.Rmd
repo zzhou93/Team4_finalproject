@@ -28,7 +28,7 @@ The goal of finalproject is to visualize unemployed rate and household income co
 You can install the development version of finalproject like so:
 
 ``` r
-# install.packages("finalproject")
+# install.packages("unemployedR")
 ```
 
 ## Example
@@ -37,7 +37,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 
-library(finalproject)
+library(unemployedR)
 
 ## data cleaning
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")

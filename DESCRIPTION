@@ -1,7 +1,7 @@
-Package: finalproject
+Package: unemployedR
 Type: Package
 Title: visualize unemployed rate and household income
-Version: 0.1.0
+Version: 0.9.9
 Author: Lin Quan, Xiaolan Wan, Zirou Zhou
 Maintainer: Lin Quan <linquan@iastate.edu>
 Description: We create an R package and a shiny app to visualize unemployed rate 
