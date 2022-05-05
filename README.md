@@ -62,7 +62,7 @@ plotmedianhouseholdincome(file,"NJ")
 plotunemployed_animation(file, "NJ")
 ```
 
-<img src="man/figures/image001.tif" width="100%" />
+<img src="man/figures/image001.gif" width="100%" />
 
 
 ``` r
