@@ -52,7 +52,10 @@ plotunemployed(file, 2018, "NJ")
 
 
 ## 2019 median household income in county level for a specific state.
-plotmedianhouseholdincome(file,"NJ")
+plotmedianhouseholdincome(file,"MS")
+
+## Unemployment Rate in IA from 2000 to 2020 
+plotunemployed_animation(file, "IA")
 
 ## top 10 unemployed county histogram
 stateunemployed(file,2011,"IA")
