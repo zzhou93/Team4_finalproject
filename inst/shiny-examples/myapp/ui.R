@@ -1,7 +1,7 @@
 library(shiny)
 library(shinythemes)
 library(shinydashboard)
-library(finalproject)
+library(unemployedR)
 library(plotly)
 
 file = dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")%>%
