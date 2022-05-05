@@ -27,7 +27,7 @@ plotmedianhouseholdincome <- function(file, State.name)
   database <- database %>%
     mutate(level = cut(Value, breaks = c(0, 24000, 40000, 55000, 70000, 150000), labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
 
-  colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc", "Low" = "#67b5e3", "VeryLow" = "#1155b6")
+  colorvalues <- c("VeryLow" = "#ed4747", "Low" = "#ffada2", "Medium" = "#cccccc", "High" = "#67b5e3", "VeryHigh" = "#1155b6")
   # get map data
   d <- us_map("counties") %>% filter(abbr == State.name)
   if(!State.name %in% c("AK"))
@@ -69,7 +69,7 @@ plotmedianhouseholdincome <- function(file, State.name)
 
   ggplot() + geom_sf(data = tmp) +
     geom_sf(aes(fill = level, alpha = 0.4), color = "white",  data = tmp) +
-    geom_sf_text(aes(label = Value, geometry = centroids), colour = "black", size = 3, data = tmp) +
+    geom_sf_text(aes(label = paste(round(Value/1000,1), "k", sep = ""), geometry = centroids), colour = "black", size = 3, data = tmp) +
     scale_fill_manual(values = colorvalues, guide = guide_none()) +
     ggtitle(paste("Median household income in", State.name, "in 2019")) +
     theme_void() + theme(legend.position='none', plot.title = element_text(hjust = 0.5,size = 14, face = "bold"))

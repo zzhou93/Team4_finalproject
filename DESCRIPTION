@@ -11,6 +11,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
+    stats,
+    tibble,
     ggplot2,
     sf (>= 1.0.0),
     datasets,
@@ -19,7 +21,10 @@ Imports:
     plotly,
     tidyr,
     forcats,
-    shiny
+    shiny,
+    gganimate,
+    gifski,
+    transformr
 RoxygenNote: 7.1.2
 Depends: R (>= 3.5.0)
 Suggests: 
