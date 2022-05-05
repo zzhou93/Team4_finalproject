@@ -58,6 +58,14 @@ plotmedianhouseholdincome(file,"NJ")
 <img src="man/figures/README-example-2.png" width="100%" />
 
 ``` r
+## Unemployment Rate in IA from 2000 to 2020 
+plotunemployed_animation(file, "NJ")
+```
+
+<img src="man/figures/image001.tif" width="100%" />
+
+
+``` r
 ## top 10 unemployed county histogram
 stateunemployed(file,2011,"IA")
 ```
