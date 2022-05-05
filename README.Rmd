@@ -38,29 +38,31 @@ This is a basic example which shows you how to solve a common problem:
 
 library(unemployedR)
 
-## data cleaning
+# data cleaning
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+
 str(file)
+
 
 # plot 
 
-
-
-## The unemployment rate in county level for a specific state and a year
+## The unemployment rate in county level for NJ in 2018
 plotunemployed(file, 2018, "NJ")
 
 
-
-## 2019 median household income in county level for a specific state.
+## 2019 median household income in county level for MS
 plotmedianhouseholdincome(file,"MS")
+
 
 ## Unemployment Rate in IA from 2000 to 2020 
 plotunemployed_animation(file, "IA")
 
-## top 10 unemployed county histogram
+
+## top 10 unemployed county in IA in 2000 histogram
 stateunemployed(file,2011,"IA")
 
-## The unemployment rate along with years
+
+## The unemployment rate of Iowa along with years
 plotunemployed_time(file,"IA")
 
 ```

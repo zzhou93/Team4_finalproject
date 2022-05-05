@@ -24,8 +24,9 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(unemployedR)
 
-## data cleaning
+# data cleaning
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+
 str(file)
 #> 'data.frame':    290441 obs. of  7 variables:
 #>  $ FIPS_Code: int  0 0 0 0 0 0 0 0 0 0 ...
@@ -36,11 +37,10 @@ str(file)
 #>  $ year     : num  2000 2000 2000 2000 2001 ...
 #>  $ Value    : num  1.43e+08 1.37e+08 5.70e+06 3.99 1.44e+08 ...
 
+
 # plot 
 
-
-
-## The unemployment rate in county level for a specific state and a year
+## The unemployment rate in county level for NJ in 2018
 plotunemployed(file, 2018, "NJ")
 #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
 #> prefer_proj): Discarded datum unknown in Proj4 definition
@@ -50,34 +50,39 @@ plotunemployed(file, 2018, "NJ")
 
 ``` r
 
-
-## 2019 median household income in county level for a specific state.
-plotmedianhouseholdincome(file,"NJ")
+## 2019 median household income in county level for MS
+plotmedianhouseholdincome(file,"MS")
 ```
 
 <img src="man/figures/README-example-2.png" width="100%" />
 
 ``` r
+
 ## Unemployment Rate in IA from 2000 to 2020 
 plotunemployed_animation(file, "IA")
+#> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
+#> Using compatibility `.name_repair`.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
-<img src="man/figures/image001.gif" width="100%" />
-
+<img src="man/figures/README-example-1.gif" width="100%" />
 
 ``` r
-## top 10 unemployed county histogram
+
+## top 10 unemployed county in IA in 2000 histogram
 stateunemployed(file,2011,"IA")
 ```
 
-<img src="man/figures/README-example-3.png" width="100%" />
+<img src="man/figures/README-example-4.png" width="100%" />
 
 ``` r
-## The unemployment rate along with years
+
+## The unemployment rate of Iowa along with years
 plotunemployed_time(file,"IA")
 ```
 
-<img src="man/figures/README-example-4.png" width="100%" />
+<img src="man/figures/README-example-5.png" width="100%" />
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date. `devtools::build_readme()` is handy for this. You could also
