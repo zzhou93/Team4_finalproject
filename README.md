@@ -59,7 +59,7 @@ plotmedianhouseholdincome(file,"NJ")
 
 ``` r
 ## Unemployment Rate in IA from 2000 to 2020 
-plotunemployed_animation(file, "NJ")
+plotunemployed_animation(file, "IA")
 ```
 
 <img src="man/figures/image001.gif" width="100%" />
