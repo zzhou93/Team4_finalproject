@@ -22,3 +22,24 @@ test_that("is map there?",{
   expect_equal(length(c("US",unique(map$abbr),"PR")),length(unique(file$State)))
   expect_equal(c("US",unique(map$abbr),"PR"),unique(file$State))
 })
+
+test_that("umenployed rate time output is a ggplot2 plot", {
+  file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+  p <- plotunemployed_time(file, "IA")
+
+  expect_s3_class(p, "ggplot")
+})
+
+test_that("county level umemployed pop output is a ggplot2 plot", {
+  file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
+  p <- stateunemployed(file, 2012,"IA")
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+
+
+
+
+

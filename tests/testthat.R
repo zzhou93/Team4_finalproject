@@ -1,4 +1,4 @@
 library(testthat)
-library(finalproject)
+library(unemployedR)
 
-test_check("finalproject")
+test_check("unemployedR")
