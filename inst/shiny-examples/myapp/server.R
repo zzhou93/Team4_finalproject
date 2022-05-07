@@ -21,7 +21,7 @@ shinyServer(function(input, output) {
 
   ##### first for spatial
   output$first <- renderPlot({
-    plotunemployed(file, input$year, input$state)
+    plotunemployed(file, as.numeric(input$year), input$state)
   })
 
   ##### first for insert
