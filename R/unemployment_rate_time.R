@@ -20,13 +20,13 @@ plotunemployed_time <- function(file, local.name){
     database <- file%>%
       filter(State %in% c(local.name,"US"))%>%
       spread(Attribute,Value)
-    database$State<-as.factor(database$State)
-   # temp_plot <-
-      database %>% ggplot(aes(year,Unemployment_rate_,group=State,text = paste('State: ', local.name,
-                                                                                      '<br>Year: ', year,
-                                                                                      '<br>Employment: ', Employed_,
-                                                                                      '<br>Unemployment: ', Unemployed_,
-                                                                                      '<br>Unemployment rate: ', Unemployment_rate_,"%"),color=State))+
+   # database$State<-as.factor(database$State)
+    # temp_plot <-
+     database %>% ggplot(aes(year,Unemployment_rate_,group=State,text = paste('State: ', State,
+                                                                                         '<br>Year: ', year,
+                                                                                         '<br>Employment: ', Employed_,
+                                                                                         '<br>Unemployment: ', Unemployed_,
+                                                                                         '<br>Unemployment rate: ', round(Unemployment_rate_,2),"%"),color=State))+
       geom_point()+geom_line() +
       theme(
         plot.title = element_text(size = 18, face = "bold"),
