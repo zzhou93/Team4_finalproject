@@ -16,6 +16,12 @@
 #'
 plotunemployed_animation <- function(file, State.name)
 {
+  if(State.name %in% c("AK", "HI", "VA"))
+  {
+    print("Do not support animation for this state!")
+    return()
+  }
+
   # summarize unemployment
   database <- file %>% filter(Attribute == "Unemployment_rate_") %>%
     filter(State == State.name) %>% filter(FIPS_Code %% 1000 != 0) %>%
@@ -23,9 +29,28 @@ plotunemployed_animation <- function(file, State.name)
 
 
   database <- database %>%
-    mutate(level = cut(Value, breaks = c(0, 3, 5, 7, 9, 100), labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
+    mutate(level = cut(Value, breaks = c(0, 3, 5, 7, 9, 100),
+                       labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
 
-  colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc", "Low" = "#67b5e3", "VeryLow" = "#1155b6")
+  colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc",
+                   "Low" = "#67b5e3", "VeryLow" = "#1155b6", "None" = "#150F0F")
+
+
+  for(yr in 2000:2020)
+  {
+    if(State.name == "LA" & yr %in% 2005:2006)
+    {
+      database <- database %>%
+        add_row(FIPS_Code = NA, State = rep("LA", 7), year = rep(yr, 7), state = rep("LA", 7),
+                Area_name = c("Jefferson", "Orleans", "Plaquemines", "St. Bernard",
+                              "St. Helena", "St. John the Baptist","St. Tammany"),
+                Attribute = rep(database$Attribute[1], 7),
+                Value = NA, level = "None")
+    }
+  }
+
+  database <- database %>% arrange(year, Area_name)
+
   # get map data
   rawd <- us_map("counties") %>% filter(abbr == State.name)
   if(!State.name %in% c("AK"))
@@ -33,34 +58,6 @@ plotunemployed_animation <- function(file, State.name)
   rawd$group <- rawd$county
   d <- rawd %>% arrange(group)
 
-  if(State.name == "AK")
-  {
-    tmp <- database %>% filter(Area_name == "Valdez-Cordova Census Area")
-    for(year in 2000:2020)
-    {
-      database <- database %>% add_row(FIPS_Code = 2063, State = "AK", Area_name = "Chugach Census Area",
-                                       state = "AK", Attribute = database$Attribute[1],
-                                       year = year, Value = tmp$Value[year - 1999]) %>%
-        add_row(FIPS_Code = 2066, State = "AK", Area_name = "Copper River Census Area",
-                state = "AK", Attribute = database$Attribute[1], year = year, Value = tmp$Value[year - 1999])
-      if(year < 2010)
-      {
-        database <- database %>% add_row(FIPS_Code = 2015, State = "AK", Area_name = "Hoonah-Angoon Census Area",
-                                         state = "AK", Attribute = database$Attribute[1], year = year, Value = NA) %>%
-          add_row(FIPS_Code = 2195, State = "AK", Area_name = "Petersburg Census Area",
-                  state = "AK", Attribute = database$Attribute[1], year = year, Value = NA)
-      }
-    }
-    database <- database %>% filter(Area_name != "Valdez-Cordova Census Area")
-
-  }
-
-  if(State.name == "HI")
-  {
-    for(year in 2000:2020)
-      database <- database %>% add_row(FIPS_Code = 5005, State = "HI", Area_name = "Kalawao County",
-                                       state = "HI", year = year, Attribute = database$Attribute[1], Value = NA)
-  }
 
   database <- database %>% arrange(year, Area_name)
 
@@ -77,9 +74,11 @@ plotunemployed_animation <- function(file, State.name)
 
   spdata  <- st_sfc(USS, crs = usmap_crs()@projargs)
   tmp <- data.frame()
+
   for(yr in 2000:2020)
   {
-    tmp <- rbind(tmp, st_sf(data.frame(database %>% filter(year == yr), geometry = spdata)))
+    tmp <- rbind(tmp, st_sf(data.frame(database %>% filter(year == yr) %>% arrange(Area_name),
+                                       geometry = spdata)))
   }
   tmp$centroids <- st_centroid(tmp$geometry)
 

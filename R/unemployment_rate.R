@@ -33,7 +33,8 @@ plotunemployed <- function(file, yr, State.name)
   database <- database %>%
     mutate(level = cut(Value, breaks = c(0, 2, 4, 6, 8, 100), labels = c("VeryLow", "Low", "Medium", "High", "VeryHigh")))
 
-  colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc", "Low" = "#67b5e3", "VeryLow" = "#1155b6")
+  colorvalues <- c("VeryHigh" = "#ed4747", "High" = "#ffada2", "Medium" = "#cccccc", "Low" = "#67b5e3", "VeryLow" = "#1155b6",
+                   "None" = "#150F0F")
   # get map data
   d <- us_map("counties") %>% dplyr::filter(abbr == State.name)
   if(!State.name %in% c("AK"))
@@ -44,25 +45,36 @@ plotunemployed <- function(file, yr, State.name)
   if(State.name == "AK")
   {
     tmp <- database %>% dplyr::filter(Area_name == "Valdez-Cordova Census Area")
-    database <- database %>% add_row(FIPS_Code = 2063, State = "AK", Area_name = "Chugach Census Area",
-                                     state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
-      add_row(FIPS_Code = 2066, State = "AK", Area_name = "Copper River Census Area",
-              state = "AK", Attribute = database$Attribute[1], Value = tmp$Value) %>%
+    database <- database %>%
+      add_row(FIPS_Code = NA, State = rep("AK", 2),
+              Area_name = c("Chugach Census Area", "Copper River Census Area"),
+              state = "AK", Attribute = rep(database$Attribute[1], 2),
+              year = rep(yr, 2), Value = NA, level = "None") %>%
       dplyr::filter(Area_name != "Valdez-Cordova Census Area")
   }
   if(State.name == "AK" & yr < 2010)
   {
-    database <- database %>% add_row(FIPS_Code = 2015, State = "AK", Area_name = "Hoonah-Angoon Census Area",
-                                     state = "AK", Attribute = database$Attribute[1], Value = NA) %>%
-      add_row(FIPS_Code = 2195, State = "AK", Area_name = "Petersburg Census Area",
-              state = "AK", Attribute = database$Attribute[1], Value = NA)
+    database <- database %>%
+      add_row(FIPS_Code = NA, State = rep("AK", 2),  year = yr,
+              Area_name = c("Hoonah-Angoon Census Area","Petersburg Census Area"),
+              state = rep("AK", 2), Attribute = rep(database$Attribute[1], 2),
+              Value = NA, level = rep("None", 2))
   } else if(State.name == "HI")
   {
-    database <- database %>% add_row(FIPS_Code = 5005, State = "HI", Area_name = "Kalawao County",
-                                     state = "HI", Attribute = database$Attribute[1], Value = NA)
+    database <- database %>%
+      add_row(FIPS_Code = 5005, State = "HI", Area_name = "Kalawao County", year = yr,
+              state = "HI", Attribute = database$Attribute[1], Value = NA,level = "None")
+  } else if(State.name == "LA" & yr %in% 2005:2006)
+  {
+    database <- database %>%
+      add_row(FIPS_Code = NA, State = rep("LA", 7), year = rep(yr, 7), state = rep("LA", 7),
+              Area_name = c("Jefferson", "Orleans", "Plaquemines", "St. Bernard",
+                            "St. Helena", "St. John the Baptist","St. Tammany"),
+              Attribute = rep(database$Attribute[1], 7),
+              Value = NA, level = "None")
   }
 
-  database <- database %>% arrange()
+  database <- database %>% arrange(Area_name)
 
   USS <- lapply(split(d, d$county), function(x) {
     if(length(table(x$piece)) == 1)
