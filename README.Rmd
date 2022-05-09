@@ -38,7 +38,7 @@ You can install the development version of `unemployedR` like so:
 
 This is a basic example which shows you how to solve a common problem:
 
-### `dataclean`
+### `dataclean(url)`
 
 This function is used to clean the data for the future plots.
 
@@ -54,7 +54,7 @@ file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.cs
 str(file)
 ```
 
-### `plotunemployed`
+### `plotunemployed(file, yr, State.name)`
 
 This function is used to plot the unemployment rate in county level for a specific state and a year.
 
@@ -64,7 +64,7 @@ The example shows the unemployment rate in county level for NJ in 2018.
 plotunemployed(file, 2018, "NJ")
 ```
 
-### `plotmedianhouseholdincome`
+### `plotmedianhouseholdincome(file, State.name)`
 
 This function is used to plot the 2019 median household income in county level for a specific state.
 
@@ -74,7 +74,7 @@ The example shows 2019 median household income in county level for MS
 plotmedianhouseholdincome(file,"MS")
 ```
 
-### `plotunemployed_animation`
+### `plotunemployed_animation(file, State.name)`
 
 This function is used to provide animation plot of the unemployment rate in county level for a specific state.
 
@@ -84,7 +84,7 @@ The example shows unemployment rate in IA from 2000 to 2020.
 plotunemployed_animation(file, "IA")
 ```
 
-### `plotunemployed_time`
+### `plotunemployed_time(file, local.name)`
 
 This function is used to plot the unemployment rate along with years.
 
@@ -94,7 +94,7 @@ The example shows unemployment rate in IA along with years.
 plotunemployed_time(file, "IA")
 ```
 
-### `stateunemployed`
+### `stateunemployed(file, yr, State.name`
 
 This function is used to plot top 10 unemployed county histogram in selected state and a year.
 
