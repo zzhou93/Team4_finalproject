@@ -6,12 +6,21 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of unemployedR is to visualize unemployed rate and household
+The goal of `unemployedR` is to visualize unemployed rate and household
 income compare with time across United States.
+
+Here are links to our GitHub
+[repository](https://github.com/zzhou93/unemployedR) where the code for
+the package is stored and to the package
+[website](https://zzhou93.github.io/unemployedR) where more information
+about the package is well shown.
+
+And the shiny app can be found under the`inst/shiny-example` folder or
+ran the `unemployedR::runExample()`.
 
 ## Installation
 
-You can install the development version of finalproject like so:
+You can install the development version of `unemployedR` like so:
 
 ``` r
 # install.packages("unemployedR")
@@ -20,6 +29,12 @@ You can install the development version of finalproject like so:
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
+
+### `dataclean`
+
+This function is used to clean the data for the future plots.
+
+The example shows the structure of the data file after cleaning.
 
 ``` r
 library(unemployedR)
@@ -36,53 +51,71 @@ str(file)
 #>  $ Attribute: chr  "Civilian_labor_force_" "Employed_" "Unemployed_" "Unemployment_rate_" ...
 #>  $ year     : num  2000 2000 2000 2000 2001 ...
 #>  $ Value    : num  1.43e+08 1.37e+08 5.70e+06 3.99 1.44e+08 ...
-
-
-# plot 
-
-## The unemployment rate in county level for NJ in 2018
-plotunemployed(file, 2018, "NJ")
-#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
-#> prefer_proj): Discarded datum unknown in Proj4 definition
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+### `plotunemployed`
+
+This function is used to plot the unemployment rate in county level for
+a specific state and a year.
+
+The example shows the unemployment rate in county level for NJ in 2018.
 
 ``` r
+plotunemployed(file, 2018, "NJ")
+```
 
-## 2019 median household income in county level for MS
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+### `plotmedianhouseholdincome`
+
+This function is used to plot the 2019 median household income in county
+level for a specific state.
+
+The example shows 2019 median household income in county level for MS
+
+``` r
 plotmedianhouseholdincome(file,"MS")
 ```
 
-<img src="man/figures/README-example-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+### `plotunemployed_animation`
+
+This function is used to provide animation plot of the unemployment rate
+in county level for a specific state.
+
+The example shows unemployment rate in IA from 2000 to 2020.
 
 ``` r
-
-## Unemployment Rate in IA from 2000 to 2020 
 plotunemployed_animation(file, "IA")
-#> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.
-#> Using compatibility `.name_repair`.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
-<img src="man/figures/README-example-1.gif" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.gif" width="100%" />
+
+### `plotunemployed_time`
+
+This function is used to plot the unemployment rate along with years.
+
+The example shows unemployment rate in IA along with years.
 
 ``` r
-
-## top 10 unemployed county in IA in 2000 histogram
-stateunemployed(file,2011,"IA")
+plotunemployed_time(file, "IA")
 ```
 
-<img src="man/figures/README-example-4.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+### `stateunemployed`
+
+This function is used to plot top 10 unemployed county histogram in
+selected state and a year.
+
+The example shows top 10 unemployed counties in IA in 2011 histogram.
 
 ``` r
-
-## The unemployment rate of Iowa along with years
-plotunemployed_time(file,"IA")
+stateunemployed(file, 2011,"IA")
 ```
 
-<img src="man/figures/README-example-5.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 You’ll still need to render `README.Rmd` regularly, to keep `README.md`
 up-to-date. `devtools::build_readme()` is handy for this. You could also
