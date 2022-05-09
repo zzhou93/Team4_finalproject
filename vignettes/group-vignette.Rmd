@@ -29,7 +29,7 @@ Here are links to our github [repository](https://github.com/zzhou93/unemployedR
 
 # Functions
 
-## Clean dara
+## Clean data
 
 ### About the data
 
