@@ -29,7 +29,7 @@ Here are links to our github [repository](https://github.com/zzhou93/unemployedR
 
 # About the data
 
-In the data clean, we first read the CSV file from the [Unemployment and median household income for the U.S., States, and counties, 2000-20](https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv) by using the `read.csv()`.
+We first read the CSV file from the [Unemployment and median household income for the U.S., States, and counties, 2000-20](https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv) by using the `read.csv()`.
 ```{r}
 file<-read.csv("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 head(file)
