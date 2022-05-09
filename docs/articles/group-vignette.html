@@ -69,7 +69,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>USDA database Analysis</h1>
+                        <h4 data-toc-skip class="author">Zirou Zhou, Xiaolan Wan, Lin Quan</h4>
             
+            <h4 data-toc-skip class="date">2022-05-09</h4>
       
       
       <div class="hidden name"><code>group-vignette.Rmd</code></div>
@@ -78,12 +80,58 @@
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>In this package, we want to introduce an easy method in visualization the census data by geographic and time. We will use the USDA published unemployment and household income data as the original data source. Since it contains all the county, state and nation levels data from 2000 to 2022. And when visualization the data by geographic, we will the <code><a href="https://rdrr.io/pkg/usmap/man/us_map.html" class="external-link">usmap::us_map()</a></code> for each county’s longitude and latitude.It totally including six packages <code>clean</code>, <code>unemployment_rate</code>, <code>unemployment_rate_time</code>, <code>global</code>, <code>medianhhimcome</code> and <code>pop</code>.</p>
+<p>Here are links to our github <a href="https://github.com/zzhou93/unemployedR" class="external-link">repository</a> and <a href="https://zzhou93.github.io/unemployedR" class="external-link">website</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
+<div class="section level3">
+<h3 id="clean-dara">Clean dara<a class="anchor" aria-label="anchor" href="#clean-dara"></a>
+</h3>
+<div class="section level4">
+<h4 id="about-the-data">About the data<a class="anchor" aria-label="anchor" href="#about-the-data"></a>
+</h4>
+<p>We first read the CSV file from the <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv" class="external-link">Unemployment and median household income for the U.S., States, and counties, 2000-20</a> by using the <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">unemployedR</span><span class="op">)</span></code></pre></div>
-<p><code>Data clean</code></p>
+<code class="sourceCode R"><span class="va">file</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
+<span class="co">#&gt;   FIPS_Code State     Area_name                 Attribute        Value</span>
+<span class="co">#&gt; 1         0    US United States Civilian_labor_force_2000 1.426016e+08</span>
+<span class="co">#&gt; 2         0    US United States             Employed_2000 1.369049e+08</span>
+<span class="co">#&gt; 3         0    US United States           Unemployed_2000 5.696723e+06</span>
+<span class="co">#&gt; 4         0    US United States    Unemployment_rate_2000 3.994853e+00</span>
+<span class="co">#&gt; 5         0    US United States Civilian_labor_force_2001 1.437865e+08</span>
+<span class="co">#&gt; 6         0    US United States             Employed_2001 1.369780e+08</span></code></pre></div>
+<p>The raw data contains all the census information in one column <code>Attribute</code>, the structure of the <code>Attribute</code> is <code>Category_name_year</code>.</p>
+<p>Other than <code>Attribute</code>, we also need to restructure the <code>state</code> and <code>Area_name</code> column. Since in this database, we have 3 level, the county, state and national data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#about one page?#</span>
-<span class="va">file</span><span class="op">=</span><span class="fu"><a href="../reference/dataclean.html">dataclean</a></span><span class="op">(</span><span class="st">"https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">file</span>,<span class="va">State</span><span class="op">==</span><span class="st">"NJ"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;     State             Area_name</span>
+<span class="co">#&gt; 1      NJ            New Jersey</span>
+<span class="co">#&gt; 87     NJ   Atlantic County, NJ</span>
+<span class="co">#&gt; 176    NJ     Bergen County, NJ</span>
+<span class="co">#&gt; 265    NJ Burlington County, NJ</span>
+<span class="co">#&gt; 354    NJ     Camden County, NJ</span>
+<span class="co">#&gt; 443    NJ   Cape May County, NJ</span></code></pre></div>
+<p>By the example of New Jersey, We find out, all national information is collected in the <code>State="US", Area_name="United States"</code>. The state level information is collected in <code>State= abbreviation , Area_name= full spelled</code>. The county data is collected in <code>State=abbreviation, Area_name=County name, Abbrevation</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="data-clean">Data clean<a class="anchor" aria-label="anchor" href="#data-clean"></a>
+</h4>
+<p>This function is a simple application of <code>dplyr</code> package in restructuring the raw data. First, since the year is always in form of <code>20xx</code>, we can use <code>dplyr::seperate(...,...,sep = -4)</code> to separate the <code>category</code> and <code>year</code>. Then, we delete the duplicate Abbreviation in <code>State</code> and <code>Area_name</code>, and <code>county/parish</code> in the <code>Area_name</code> by <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub()</a></code>.</p>
+<ul>
+<li>
+<code>URL</code>: The raw csv file URL from USDA site</li>
+</ul>
+<div class="section level5">
+<h5 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h5>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">file</span><span class="op">=</span><span class="fu"><a href="../reference/dataclean.html">dataclean</a></span><span class="op">(</span><span class="st">"https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    290441 obs. of  7 variables:</span>
 <span class="co">#&gt;  $ FIPS_Code: int  0 0 0 0 0 0 0 0 0 0 ...</span>
@@ -93,37 +141,88 @@
 <span class="co">#&gt;  $ Attribute: chr  "Civilian_labor_force_" "Employed_" "Unemployed_" "Unemployment_rate_" ...</span>
 <span class="co">#&gt;  $ year     : num  2000 2000 2000 2000 2001 ...</span>
 <span class="co">#&gt;  $ Value    : num  1.43e+08 1.37e+08 5.70e+06 3.99 1.44e+08 ...</span></code></pre></div>
-<p><code>Mapping the data</code></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#about two pages?#</span>
-<span class="co">## The unemployment rate in county level for a specific state and a year</span>
-<span class="fu"><a href="../reference/plotunemployed.html">plotunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2018</span>, <span class="st">"NJ"</span><span class="op">)</span>
+</div>
+</div>
+<div class="section level4">
+<h4 id="notation">Notation<a class="anchor" aria-label="anchor" href="#notation"></a>
+</h4>
+<p>The government does not collect all the attributes annually. Only <code>Civilian_labor_force</code>, <code>Employed</code>, <code>Unemployed</code> and <code>Unemployment_rate</code> have been fully collected. And for some year, such as 2005 and 2006, they didn’t collect all counties’ data for employment. This may result some problem when we visualize the data later.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="mapping-the-data">Mapping the data<a class="anchor" aria-label="anchor" href="#mapping-the-data"></a>
+</h3>
+<div class="section level4">
+<h4 id="plotunemployed">plotunemployed<a class="anchor" aria-label="anchor" href="#plotunemployed"></a>
+</h4>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotunemployed.html">plotunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2018</span>, <span class="st">"NJ"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =</span>
 <span class="co">#&gt; prefer_proj): Discarded datum unknown in Proj4 definition</span></code></pre></div>
-<p><img src="group-vignette_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="plotmedianhouseholdincome">plotmedianhouseholdincome<a class="anchor" aria-label="anchor" href="#plotmedianhouseholdincome"></a>
+</h4>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-
-
 <span class="co">## 2019 median household income in county level for a specific state.</span>
 <span class="fu"><a href="../reference/plotmedianhouseholdincome.html">plotmedianhouseholdincome</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"NJ"</span><span class="op">)</span></code></pre></div>
-<p><img src="group-vignette_files/figure-html/unnamed-chunk-3-2.png" width="700"></p>
-<p><code>Plot and portly</code></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#about one page about plot and 2 pages about the shiny app?#</span>
-<span class="co">## top 10 unemployed county histogram</span>
-<span class="fu"><a href="../reference/stateunemployed.html">stateunemployed</a></span><span class="op">(</span><span class="va">file</span>,<span class="fl">2011</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
-<p><img src="group-vignette_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="plotunemployed_animation">plotunemployed_animation<a class="anchor" aria-label="anchor" href="#plotunemployed_animation"></a>
+</h4>
+</div>
+</div>
+<div class="section level3">
+<h3 id="plotting-the-data">Plotting the data<a class="anchor" aria-label="anchor" href="#plotting-the-data"></a>
+</h3>
+<div class="section level4">
+<h4 id="plotunemployed_time">plotunemployed_time<a class="anchor" aria-label="anchor" href="#plotunemployed_time"></a>
+</h4>
+<p>This function is used to plot the unemployment rate of selected state along with years.</p>
+<p>The required aesthetics are:</p>
+<ul>
+<li>
+<code>file</code>: The clean up file from USDA site</li>
+<li>
+<code>local.name</code>: Selected state in the data. If it’s not a vaild state name, it shows “Error! Not a state!”</li>
+</ul>
+<p>The example shows unemployment rate in IA along with years.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co">## The unemployment rate along with years</span>
-<span class="fu"><a href="../reference/plotunemployed_time.html">plotunemployed_time</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
-<p><img src="group-vignette_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotunemployed_time.html">plotunemployed_time</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>We use the state level data for this unemployment rate vs time plot. We also compared the state level unemployment rate with the whole nation, to figure out whether the chosen state has a different trend compared with the whole nation.</p>
+</div>
+<div class="section level4">
+<h4 id="stateunemployed">stateunemployed<a class="anchor" aria-label="anchor" href="#stateunemployed"></a>
+</h4>
+<p>This function is used to plot top 10 unemployed county histogram in selected state and a year.</p>
+<p>The required aesthetics are:</p>
+<ul>
+<li>
+<code>file</code>: The clean up file from USDA site</li>
+<li>
+<code>yr</code>: The selected year from 2000 to 202. If the year is out of range [2000, 2020], it shows “Error! Not a valid year!”.</li>
+<li>
+<code>State.name</code>: Selected state in the data. If it’s not a vaild state name, it shows “Error! Not a state!”</li>
+</ul>
+<p>The example shows top 10 unemployed counties in IA in 2011 histogram.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/stateunemployed.html">stateunemployed</a></span><span class="op">(</span><span class="va">file</span>,<span class="fl">2011</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>We rank the top 10 counties in Iowa state. The histogram represent the unemployment population in each county, and later in shiny app, for each county we calculate the weight of this population in whole state.</p>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

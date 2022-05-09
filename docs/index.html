@@ -73,11 +73,13 @@
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of unemployedR is to visualize unemployed rate and household income compare with time across United States.</p>
+<p>The goal of <code>unemployedR</code> is to visualize unemployed rate and household income compare with time across United States.</p>
+<p>Here are links to our GitHub <a href="https://github.com/zzhou93/unemployedR" class="external-link">repository</a> where the code for the package is stored and to the package <a href="https://zzhou93.github.io/unemployedR" class="external-link">website</a> where more information about the package is well shown.</p>
+<p>And the shiny app can be found under the<code>inst/shiny-example</code> folder or ran the <code><a href="reference/runExample.html">unemployedR::runExample()</a></code>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of finalproject like so:</p>
+<p>You can install the development version of <code>unemployedR</code> like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("unemployedR")</span></code></pre></div>
 </div>
@@ -85,11 +87,15 @@
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
+<p><code>dataclean(url)</code></p>
+<p>This function is used to clean the data for the future plots.</p>
+<p>The example shows the structure of the data file after cleaning.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">unemployedR</span><span class="op">)</span>
 
-<span class="co">## data cleaning</span>
+<span class="co"># data cleaning</span>
 <span class="va">file</span><span class="op">=</span><span class="fu"><a href="reference/dataclean.html">dataclean</a></span><span class="op">(</span><span class="st">"https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv"</span><span class="op">)</span>
+
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    290441 obs. of  7 variables:</span>
 <span class="co">#&gt;  $ FIPS_Code: int  0 0 0 0 0 0 0 0 0 0 ...</span>
@@ -98,31 +104,37 @@
 <span class="co">#&gt;  $ state    : chr  NA NA NA NA ...</span>
 <span class="co">#&gt;  $ Attribute: chr  "Civilian_labor_force_" "Employed_" "Unemployed_" "Unemployment_rate_" ...</span>
 <span class="co">#&gt;  $ year     : num  2000 2000 2000 2000 2001 ...</span>
-<span class="co">#&gt;  $ Value    : num  1.43e+08 1.37e+08 5.70e+06 3.99 1.44e+08 ...</span>
-
-<span class="co"># plot </span>
-
-
-
-<span class="co">## The unemployment rate in county level for a specific state and a year</span>
-<span class="fu"><a href="reference/plotunemployed.html">plotunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2018</span>, <span class="st">"NJ"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =</span>
-<span class="co">#&gt; prefer_proj): Discarded datum unknown in Proj4 definition</span></code></pre></div>
-<p><img src="reference/figures/README-example-1.png" width="100%"></p>
+<span class="co">#&gt;  $ Value    : num  1.43e+08 1.37e+08 5.70e+06 3.99 1.44e+08 ...</span></code></pre></div>
+<p><code>plotunemployed(file, yr, State.name)</code></p>
+<p>This function is used to plot the unemployment rate in county level for a specific state and a year.</p>
+<p>The example shows the unemployment rate in county level for NJ in 2018.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-
-<span class="co">## 2019 median household income in county level for a specific state.</span>
-<span class="fu"><a href="reference/plotmedianhouseholdincome.html">plotmedianhouseholdincome</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"NJ"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-example-2.png" width="100%"></p>
+<code class="sourceCode R"><span class="fu"><a href="reference/plotunemployed.html">plotunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2018</span>, <span class="st">"NJ"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
+<p><code>plotmedianhouseholdincome(file, State.name)</code></p>
+<p>This function is used to plot the 2019 median household income in county level for a specific state.</p>
+<p>The example shows 2019 median household income in county level for MS</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## top 10 unemployed county histogram</span>
-<span class="fu"><a href="reference/stateunemployed.html">stateunemployed</a></span><span class="op">(</span><span class="va">file</span>,<span class="fl">2011</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-example-3.png" width="100%"></p>
+<code class="sourceCode R"><span class="fu"><a href="reference/plotmedianhouseholdincome.html">plotmedianhouseholdincome</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"MS"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<p><code>plotunemployed_animation(file, State.name)</code></p>
+<p>This function is used to provide animation plot of the unemployment rate in county level for a specific state.</p>
+<p>The example shows unemployment rate in IA from 2000 to 2020.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## The unemployment rate along with years</span>
-<span class="fu"><a href="reference/plotunemployed_time.html">plotunemployed_time</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-example-4.png" width="100%"></p>
+<code class="sourceCode R"><span class="fu"><a href="reference/plotunemployed_animation.html">plotunemployed_animation</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"IA"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.gif" width="100%"></p>
+<p><code>plotunemployed_time(file, local.name)</code></p>
+<p>This function is used to plot the unemployment rate along with years.</p>
+<p>The example shows unemployment rate in IA along with years.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/plotunemployed_time.html">plotunemployed_time</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"IA"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+<p><code>stateunemployed(file, yr, State.name</code></p>
+<p>This function is used to plot top 10 unemployed county histogram in selected state and a year.</p>
+<p>The example shows top 10 unemployed counties in IA in 2011 histogram.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/stateunemployed.html">stateunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2011</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 <p>You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date. <code><a href="https://devtools.r-lib.org/reference/build_rmd.html" class="external-link">devtools::build_readme()</a></code> is handy for this. You could also use GitHub Actions to re-render <code>README.Rmd</code> every time you push. An example workflow can be found here: <a href="https://github.com/r-lib/actions/tree/v1/examples" class="external-link uri">https://github.com/r-lib/actions/tree/v1/examples</a>.</p>
 <p>In that case, don’t forget to commit and push the resulting figure files, so they display on GitHub and CRAN.</p>
 </div>
