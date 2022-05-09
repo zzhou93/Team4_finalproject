@@ -27,11 +27,7 @@ In this package, we want to introduce an easy method in visualization the census
 
 Here are links to our github [repository](https://github.com/zzhou93/unemployedR) and [website](https://zzhou93.github.io/unemployedR).
 
-# Functions
-
-## Clean data
-
-### About the data
+# About the data
 
 In the data clean, we first read the CSV file from the [Unemployment and median household income for the U.S., States, and counties, 2000-20](https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv) by using the `read.csv()`.
 ```{r}
@@ -46,12 +42,15 @@ unique(filter(file,State=="NJ")[2:3])
 ```
 By the example of New Jersey, We find out, all national information is collected in the `State="US", Area_name="United States"`. The state level information is collected in `State= abbreviation , Area_name= full spelled`. The county data is collected in `State=abbreviation, Area_name=County name, Abbrevation`.
 
-### Data clean
+# Functions
+
+## Clean data
+
+### dataclean
 This function is a simple application of `dplyr` package in restructuring the raw data. First, since the year is always in form of `20xx`, we can use `dplyr::seperate(...,...,sep = -4)` to separate the `category` and `year`. Then, we delete the duplicate Abbreviation in `State` and `Area_name`, and `county/parish` in the `Area_name` by `gsub()`.
 
 - `URL`: The raw csv file URL from USDA site
 
-#### Example
 ```{r}
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 str(file)
@@ -66,8 +65,6 @@ The government does not collect all the attributes annually. Only `Civilian_labo
 
 ```{r}
 plotunemployed(file, 2018, "NJ")
-
-
 
 ```
 
