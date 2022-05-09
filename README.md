@@ -30,7 +30,7 @@ You can install the development version of `unemployedR` like so:
 
 This is a basic example which shows you how to solve a common problem:
 
-### `dataclean(url)`
+`dataclean(url)`
 
 This function is used to clean the data for the future plots.
 
@@ -53,7 +53,7 @@ str(file)
 #>  $ Value    : num  1.43e+08 1.37e+08 5.70e+06 3.99 1.44e+08 ...
 ```
 
-### `plotunemployed(file, yr, State.name)`
+`plotunemployed(file, yr, State.name)`
 
 This function is used to plot the unemployment rate in county level for
 a specific state and a year.
@@ -66,7 +66,7 @@ plotunemployed(file, 2018, "NJ")
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
-### `plotmedianhouseholdincome(file, State.name)`
+`plotmedianhouseholdincome(file, State.name)`
 
 This function is used to plot the 2019 median household income in county
 level for a specific state.
@@ -79,7 +79,7 @@ plotmedianhouseholdincome(file,"MS")
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-### `plotunemployed_animation(file, State.name)`
+`plotunemployed_animation(file, State.name)`
 
 This function is used to provide animation plot of the unemployment rate
 in county level for a specific state.
@@ -92,7 +92,7 @@ plotunemployed_animation(file, "IA")
 
 <img src="man/figures/README-unnamed-chunk-5-1.gif" width="100%" />
 
-### `plotunemployed_time(file, local.name)`
+`plotunemployed_time(file, local.name)`
 
 This function is used to plot the unemployment rate along with years.
 
@@ -104,7 +104,7 @@ plotunemployed_time(file, "IA")
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
-### `stateunemployed(file, yr, State.name`
+`stateunemployed(file, yr, State.name`
 
 This function is used to plot top 10 unemployed county histogram in
 selected state and a year.

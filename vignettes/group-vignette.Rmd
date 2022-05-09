@@ -23,7 +23,7 @@ library(usmap)
 
 # Introduction
 
-In this package, we want to introduce an easy method in visualization the economic data by geographic and time. We will use the USDA published unemployment and household income data as the original data source. Since it contains all the county, state and nation levels data from 2000 to 2022. And when visualization the data by geographic, we will the `usmap::us_map()` for each county's longitude and latitude.
+In this package, we want to introduce an easy method in visualization the census data by geographic and time. We will use the USDA published unemployment and household income data as the original data source. Since it contains all the county, state and nation levels data from 2000 to 2022. And when visualization the data by geographic, we will the `usmap::us_map()` for each county's longitude and latitude.It totally including six packages `clean`, `unemployment_rate`, `unemployment_rate_time`, `global`, `medianhhimcome` and `pop`.
 
 Here are links to our github [repository](https://github.com/zzhou93/unemployedR) and [website](https://zzhou93.github.io/unemployedR).
 
@@ -31,59 +31,40 @@ Here are links to our github [repository](https://github.com/zzhou93/unemployedR
 
 ## Clean dara
 
+### About the data
+
 In the data clean, we first read the CSV file from the [Unemployment and median household income for the U.S., States, and counties, 2000-20](https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv) by using the `read.csv()`.
 ```{r}
 file<-read.csv("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 head(file)
-str(file)
 ```
-The raw data contains all the economic information in one column `Attribute`, the structure of the `Attribute` is `Category_name_year`.First, since the year is always in form of `20xx`, we can use `dplyr::seperate(...,...,sep = -4)` to separate the `category` and `year`.
-```{r}
-file<-separate(file,Attribute,c("Attribute","year"),sep = -4)
-head(file)
-str(file)
-```
-Then we use the `table` to figure out what exactly economic information this data set provide.
-```{r}
-table(file$Attribute)
-```
-The government does not collect all the attributes annually. Only `Civilian_labor_force`, `Employed`, `Unemployed` and `Unemployment_rate` have been fully collected. And for some year, such as 2005 and 2006, they didn't collect all counties' data for each category. This may result some problem when we visualize the data later.
-```{r}
-#table(file$Attribute,file$year)
-#vec1<-unique(filter(file,Attribute=="Unemployed_"&year==2005)$Area_name)
-#Evec2<-unique(filter(file,Attribute=="Unemployed_"&year==2007)$Area_name)
-#Evec2[!vec2 %in% vec1]
-```
+The raw data contains all the census information in one column `Attribute`, the structure of the `Attribute` is `Category_name_year`. 
+
 Other than `Attribute`, we also need to restructure the `state` and `Area_name` column. Since in this database, we have 3 level, the county, state and national data.
 ```{r}
-unique(filter(file,State=="US")[2:3])
-count(filter(file,State=="US")[2:3])
-
 unique(filter(file,State=="NJ")[2:3])
-count(filter(file,State=="NJ" & Area_name=="New Jersey")[2:3])
-count(filter(file,State=="NJ" & !Area_name=="New Jersey")[2:3])
-
 ```
 By the example of New Jersey, We find out, all national information is collected in the `State="US", Area_name="United States"`. The state level information is collected in `State= abbreviation , Area_name= full spelled`. The county data is collected in `State=abbreviation, Area_name=County name, Abbrevation`.
 
-```{r}
-setdiff(unique(file$State),unique(us_map("counties")$abbr))
-```
+### Data clean
+This function is a simple application of `dplyr` package in restructuring the raw data. First, since the year is always in form of `20xx`, we can use `dplyr::seperate(...,...,sep = -4)` to separate the `category` and `year`. Then, we delete the duplicate Abbreviation in `State` and `Area_name`, and `county/parish` in the `Area_name` by `gsub()`.
 
-### dataclean
+- `URL`: The raw csv file URL from USDA site
 
+#### Example
 ```{r}
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 str(file)
 ```
+
+### Notation
+The government does not collect all the attributes annually. Only `Civilian_labor_force`, `Employed`, `Unemployed` and `Unemployment_rate` have been fully collected. And for some year, such as 2005 and 2006, they didn't collect all counties' data for employment. This may result some problem when we visualize the data later.
 
 ## Mapping the data
 
 ### plotunemployed
 
 ```{r}
-#about two pages?#
-## The unemployment rate in county level for a specific state and a year
 plotunemployed(file, 2018, "NJ")
 
 
