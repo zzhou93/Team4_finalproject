@@ -12,3 +12,6 @@ a dashboard
 \description{
 Shiny example
 }
+\author{
+Lin Quan
+}
