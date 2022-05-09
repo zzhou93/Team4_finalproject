@@ -105,19 +105,38 @@ plotmedianhouseholdincome(file,"NJ")
 
 ### plotunemployed_time
 
+This function is used to plot the unemployment rate of selected state along with years.
+
+The required aesthetics are:
+  
+- `file`: The clean up file from USDA site
+- `local.name`: Selected state in the data. If it's not a vaild state name, it shows "Error! Not a state!"
+
+The example shows unemployment rate in IA along with years.
+
 ```{r}
-#about one page about plot and 2 pages about the shiny app?#
-
-
-## The unemployment rate along with years
 plotunemployed_time(file,"IA")
 ```
 
+We use the state level data for this unemployment rate vs time plot. We also compared the state level unemployment rate with the whole nation, to figure out whether the chosen state has a different trend compared with the whole nation.
+
 ### stateunemployed
 
-```{r}
-## top 10 unemployed county histogram
+This function is used to plot top 10 unemployed county histogram in selected state and a year.
 
+The required aesthetics are:
+  
+- `file`: The clean up file from USDA site
+- `yr`: The selected year from 2000 to 202. If the year is out of range [2000, 2020], it shows "Error! Not a valid year!".
+- `State.name`: Selected state in the data. If it's not a vaild state name, it shows "Error! Not a state!"
+
+The example shows top 10 unemployed counties in IA in 2011 histogram.
+
+```{r}
 stateunemployed(file,2011,"IA")
 ```
+
+We rank the top 10 counties in Iowa state. The histogram represent the unemployment population in each county, and later in shiny app, for each county we calculate the weight of this population in whole state.
+
+
 
