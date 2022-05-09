@@ -2,6 +2,7 @@
 #' @return a dashboard
 #' @export
 #' @import shiny
+#' @author Lin Quan
 runExample <- function() {
   appDir <- system.file("shiny-examples", "myapp",
                         package = "unemployedR")
