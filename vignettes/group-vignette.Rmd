@@ -19,8 +19,6 @@ library(dplyr)
 library(usmap)
 ```
 
-
-
 # Introduction
 
 In this package, we want to introduce an easy method in visualization the census data by geographic and time. We will use the USDA published unemployment and household income data as the original data source. Since it contains all the county, state and nation levels data from 2000 to 2022. And when visualization the data by geographic, we will the `usmap::us_map()` for each county's longitude and latitude.It totally including six packages `clean`, `unemployment_rate`, `unemployment_rate_time`, `global`, `medianhhimcome` and `pop`.
@@ -30,16 +28,20 @@ Here are links to our github [repository](https://github.com/zzhou93/unemployedR
 # About the data
 
 We first read the CSV file from the [Unemployment and median household income for the U.S., States, and counties, 2000-20](https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv) by using the `read.csv()`.
-```{r}
+
+```{r,warning=FALSE, message=F}
 file<-read.csv("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 head(file)
 ```
+
 The raw data contains all the census information in one column `Attribute`, the structure of the `Attribute` is `Category_name_year`. 
 
 Other than `Attribute`, we also need to restructure the `state` and `Area_name` column. Since in this database, we have 3 level, the county, state and national data.
-```{r}
+
+```{r,warning=FALSE, message=F}
 head(unique(filter(file,State=="NJ")[2:3]))
 ```
+
 By the example of New Jersey, We find out, all national information is collected in the `State="US", Area_name="United States"`. The state level information is collected in `State= abbreviation , Area_name= full spelled`. The county data is collected in `State=abbreviation, Area_name=County name, Abbrevation`.
 
 # Functions
@@ -47,37 +49,40 @@ By the example of New Jersey, We find out, all national information is collected
 ## Clean data
 
 ### dataclean
+
 This function is a simple application of `dplyr` package in restructuring the raw data. First, since the year is always in form of `20xx`, we can use `dplyr::seperate(...,...,sep = -4)` to separate the `category` and `year`. Then, we delete the duplicate Abbreviation in `State` and `Area_name`, and `county/parish` in the `Area_name` by `gsub()`.
 
 - `URL`: The raw csv file URL from USDA site
 
-```{r}
+```{r, warning=FALSE, message=F}
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 str(file)
 ```
 
 ### Notation
+
 The government does not collect all the attributes annually. Only `Civilian_labor_force`, `Employed`, `Unemployed` and `Unemployment_rate` have been fully collected. And for some year, such as 2005 and 2006, they didn't collect all counties' data for employment. This may result some problem when we visualize the data later.
 
 ## Mapping the data
 
 ### plotunemployed
 
-```{r}
+```{r,warning=FALSE, message=F}
 plotunemployed(file, 2018, "NJ")
-
 ```
 
 
 ### plotmedianhouseholdincome
 
-```{r}
-
-## 2019 median household income in county level for a specific state.
+```{r,warning=FALSE, message=F}
 plotmedianhouseholdincome(file,"NJ")
 ```
 
 ### plotunemployed_animation
+
+```{r,warning=FALSE, message=F}
+plotunemployed_animation(file, "IA")
+```
 
 
 ## Plotting the data
@@ -93,7 +98,7 @@ The required aesthetics are:
 
 The example shows unemployment rate in IA along with years.
 
-```{r}
+```{r,warning=FALSE, message=F}
 plotunemployed_time(file,"IA")
 ```
 
@@ -111,7 +116,7 @@ The required aesthetics are:
 
 The example shows top 10 unemployed counties in IA in 2011 histogram.
 
-```{r}
+```{r,warning=FALSE, message=F}
 stateunemployed(file,2011,"IA")
 ```
 
