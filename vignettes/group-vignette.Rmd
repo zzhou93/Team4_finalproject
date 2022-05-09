@@ -1,5 +1,7 @@
 ---
 title: "USDA database Analysis"
+author: "Zirou Zhou, Xiaolan Wan, Lin Quan"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{USDA database Analysis}
@@ -7,21 +9,27 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
 library(unemployedR)
 library(tidyverse)
 library(usmap)
 ```
+
+
+
+# Introduction
+
 In this package, we want to introduce an easy method in visualization the economic data by geographic and time. We will use the USDA published unemployment and household income data as the original data source. Since it contains all the county, state and nation levels data from 2000 to 2022. And when visualization the data by geographic, we will the `usmap::us_map()` for each county's longitude and latitude.
 
-``Data clean`` 
+Here are links to our github [repository](https://github.com/zzhou93/unemployedR) and [website](https://zzhou93.github.io/unemployedR).
+
+# Functions
+
+## Clean dara
 
 In the data clean, we first read the CSV file from the [Unemployment and median household income for the U.S., States, and counties, 2000-20](https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv) by using the `read.csv()`.
 ```{r}
@@ -41,10 +49,10 @@ table(file$Attribute)
 ```
 The government does not collect all the attributes annually. Only `Civilian_labor_force`, `Employed`, `Unemployed` and `Unemployment_rate` have been fully collected. And for some year, such as 2005 and 2006, they didn't collect all counties' data for each category. This may result some problem when we visualize the data later.
 ```{r}
-table(file$Attribute,file$year)
-vec1<-unique(filter(file,Attribute=="Unemployed_"&year==2005)$Area_name)
-Evec2<-unique(filter(file,Attribute=="Unemployed_"&year==2007)$Area_name)
-Evec2[!vec2 %in% vec1]
+#table(file$Attribute,file$year)
+#vec1<-unique(filter(file,Attribute=="Unemployed_"&year==2005)$Area_name)
+#Evec2<-unique(filter(file,Attribute=="Unemployed_"&year==2007)$Area_name)
+#Evec2[!vec2 %in% vec1]
 ```
 Other than `Attribute`, we also need to restructure the `state` and `Area_name` column. Since in this database, we have 3 level, the county, state and national data.
 ```{r}
@@ -62,12 +70,16 @@ By the example of New Jersey, We find out, all national information is collected
 setdiff(unique(file$State),unique(us_map("counties")$abbr))
 ```
 
+### dataclean
 ```{r}
 file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 str(file)
 ```
 
-``Mapping the data``
+## Mapping the data
+
+### plotunemployed
+
 ```{r}
 #about two pages?#
 ## The unemployment rate in county level for a specific state and a year
@@ -75,18 +87,37 @@ plotunemployed(file, 2018, "NJ")
 
 
 
+```
+
+
+### plotmedianhouseholdincome
+
+```{r}
+
 ## 2019 median household income in county level for a specific state.
 plotmedianhouseholdincome(file,"NJ")
 ```
 
-``Plot and portly``
+### plotunemployed_animation
+
+
+## Plotting the data
+
+### plotunemployed_time
+
 ```{r}
 #about one page about plot and 2 pages about the shiny app?#
-## top 10 unemployed county histogram
 
-stateunemployed(file,2011,"IA")
 
 ## The unemployment rate along with years
 plotunemployed_time(file,"IA")
+```
+
+### stateunemployed
+
+```{r}
+## top 10 unemployed county histogram
+
+stateunemployed(file,2011,"IA")
 ```
 
