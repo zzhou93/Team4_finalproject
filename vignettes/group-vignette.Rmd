@@ -67,23 +67,57 @@ The government does not collect all the attributes annually. Only `Civilian_labo
 
 ### plotunemployed
 
+This function is used to plot the county level umemployment rate of the selected state in one year
+
+The required aesthetics are:
+  
+- `file`: The clean up file from USDA site
+- `yr`: Selected year which should be in [2000, 2020]. 
+- `State.name`: Selected state abbreviation, such as "IA".
+
+The example below shows the county level unemployment rate in New Jersey in 2018. 
+
 ```{r,warning=FALSE, message=F}
 plotunemployed(file, 2018, "NJ")
 ```
 
+We classify the unemployment rate into 5 levels: VeryLow (<2%), Low (2% ~ 4%), Medium (4% ~ 6%), High (6% ~ 8%) and VeryHigh (>8%) and fill the color as blue, light blue, grey, light red and red. There exist some missing values in some observations. We fill the color as dark grey. 
+
 
 ### plotmedianhouseholdincome
 
+This function is used to plot the county level median household income of the selected state in 2019. 
+
+The required aesthetics are:
+  
+- `file`: The clean up file from USDA site
+- `State.name`: Selected state abbreviation, such as "IA".
+
+The example below shows the county level median household income in Mississipp in 2019. 
+
 ```{r,warning=FALSE, message=F}
-plotmedianhouseholdincome(file,"NJ")
+plotmedianhouseholdincome(file,"MS")
 ```
 
+We classify the median household income (in thousands) into 5 levels: VeryLow (<24), Low (24 ~ 40), Medium (40 ~ 55), High (55 ~ 70) and VeryHigh (70 ~ 150) and fill the color as red, light red, grey, light blue and blue. 
+
+
 ### plotunemployed_animation
+
+This function is used to provide the animation plot of the county level unemployment rate of the selected state from 2000 to 2020. 
+
+The required aesthetics are:
+  
+- `file`: The clean up file from USDA site
+- `State.name`: Selected state abbreviation, such as "IA".
+
+The example below shows the animation plot of the county level unemployment rate in Iowa from 2000 to 2020. 
 
 ```{r,warning=FALSE, message=F}
 plotunemployed_animation(file, "IA")
 ```
 
+This function has the same levels as the function `plotunemployed`. 
 
 ## Plotting the data
 
