@@ -83,7 +83,6 @@ plotunemployed(file, 2018, "NJ")
 
 We classify the unemployment rate into 5 levels: VeryLow (<2%), Low (2% ~ 4%), Medium (4% ~ 6%), High (6% ~ 8%) and VeryHigh (>8%) and fill the color as blue, light blue, grey, light red and red. There exist some missing values in some observations. We fill the color as dark grey. 
 
-
 ### plotmedianhouseholdincome
 
 This function is used to plot the county level median household income of the selected state in 2019. 
@@ -101,7 +100,6 @@ plotmedianhouseholdincome(file,"MS")
 
 We classify the median household income (in thousands) into 5 levels: VeryLow (<24), Low (24 ~ 40), Medium (40 ~ 55), High (55 ~ 70) and VeryHigh (70 ~ 150) and fill the color as red, light red, grey, light blue and blue. 
 
-
 ### plotunemployed_animation
 
 This function is used to provide the animation plot of the county level unemployment rate of the selected state from 2000 to 2020. 
@@ -118,6 +116,24 @@ plotunemployed_animation(file, "IA")
 ```
 
 This function has the same levels as the function `plotunemployed`. 
+
+### Missing values and other issues 
+
+There are several data issues: 
+
+- 7 counties in LA did not collect UR in 2005 and 2006. 
+- Some Census Areas in AK were not existed before 2010.
+- The USDA dataset does not contain Kalawao County in HI.
+
+To solve this problem, we add these counties in the raw data, set the missing URs as NA and fill the counties as black color.  
+
+The example below shows the county level unemployment rate in LA in 2005.
+
+```{r,warning=FALSE, message=F}
+plotunemployed(file, 2005, "LA")
+```
+
+There are some blank unemployment rate values in lower right corner in LA in 2005
 
 ## Plotting the data
 
