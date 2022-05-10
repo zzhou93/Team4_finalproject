@@ -87,14 +87,8 @@
 <p>Here are links to our github <a href="https://github.com/zzhou93/unemployedR" class="external-link">repository</a> and <a href="https://zzhou93.github.io/unemployedR" class="external-link">website</a>.</p>
 </div>
 <div class="section level2">
-<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+<h2 id="about-the-data">About the data<a class="anchor" aria-label="anchor" href="#about-the-data"></a>
 </h2>
-<div class="section level3">
-<h3 id="clean-dara">Clean dara<a class="anchor" aria-label="anchor" href="#clean-dara"></a>
-</h3>
-<div class="section level4">
-<h4 id="about-the-data">About the data<a class="anchor" aria-label="anchor" href="#about-the-data"></a>
-</h4>
 <p>We first read the CSV file from the <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv" class="external-link">Unemployment and median household income for the U.S., States, and counties, 2000-20</a> by using the <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">file</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv"</span><span class="op">)</span>
@@ -119,17 +113,20 @@
 <span class="co">#&gt; 443    NJ   Cape May County, NJ</span></code></pre></div>
 <p>By the example of New Jersey, We find out, all national information is collected in the <code>State="US", Area_name="United States"</code>. The state level information is collected in <code>State= abbreviation , Area_name= full spelled</code>. The county data is collected in <code>State=abbreviation, Area_name=County name, Abbrevation</code>.</p>
 </div>
+<div class="section level2">
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
+<div class="section level3">
+<h3 id="clean-data">Clean data<a class="anchor" aria-label="anchor" href="#clean-data"></a>
+</h3>
 <div class="section level4">
-<h4 id="data-clean">Data clean<a class="anchor" aria-label="anchor" href="#data-clean"></a>
+<h4 id="dataclean">dataclean<a class="anchor" aria-label="anchor" href="#dataclean"></a>
 </h4>
 <p>This function is a simple application of <code>dplyr</code> package in restructuring the raw data. First, since the year is always in form of <code>20xx</code>, we can use <code>dplyr::seperate(...,...,sep = -4)</code> to separate the <code>category</code> and <code>year</code>. Then, we delete the duplicate Abbreviation in <code>State</code> and <code>Area_name</code>, and <code>county/parish</code> in the <code>Area_name</code> by <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub()</a></code>.</p>
 <ul>
 <li>
 <code>URL</code>: The raw csv file URL from USDA site</li>
 </ul>
-<div class="section level5">
-<h5 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
-</h5>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">file</span><span class="op">=</span><span class="fu"><a href="../reference/dataclean.html">dataclean</a></span><span class="op">(</span><span class="st">"https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span>
@@ -141,7 +138,6 @@
 <span class="co">#&gt;  $ Attribute: chr  "Civilian_labor_force_" "Employed_" "Unemployed_" "Unemployment_rate_" ...</span>
 <span class="co">#&gt;  $ year     : num  2000 2000 2000 2000 2001 ...</span>
 <span class="co">#&gt;  $ Value    : num  1.43e+08 1.37e+08 5.70e+06 3.99 1.44e+08 ...</span></code></pre></div>
-</div>
 </div>
 <div class="section level4">
 <h4 id="notation">Notation<a class="anchor" aria-label="anchor" href="#notation"></a>
@@ -155,24 +151,71 @@
 <div class="section level4">
 <h4 id="plotunemployed">plotunemployed<a class="anchor" aria-label="anchor" href="#plotunemployed"></a>
 </h4>
+<p>This function is used to plot the county level umemployment rate of the selected state in one year</p>
+<p>The required aesthetics are:</p>
+<ul>
+<li>
+<code>file</code>: The clean up file from USDA site</li>
+<li>
+<code>yr</code>: Selected year which should be in [2000, 2020].</li>
+<li>
+<code>State.name</code>: Selected state abbreviation, such as “IA”.</li>
+</ul>
+<p>The example below shows the county level unemployment rate in New Jersey in 2018.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotunemployed.html">plotunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2018</span>, <span class="st">"NJ"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =</span>
-<span class="co">#&gt; prefer_proj): Discarded datum unknown in Proj4 definition</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotunemployed.html">plotunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2018</span>, <span class="st">"NJ"</span><span class="op">)</span></code></pre></div>
 <p><img src="group-vignette_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>We classify the unemployment rate into 5 levels: VeryLow (&lt;2%), Low (2% ~ 4%), Medium (4% ~ 6%), High (6% ~ 8%) and VeryHigh (&gt;8%) and fill the color as blue, light blue, grey, light red and red. There exist some missing values in some observations. We fill the color as dark grey.</p>
 </div>
 <div class="section level4">
 <h4 id="plotmedianhouseholdincome">plotmedianhouseholdincome<a class="anchor" aria-label="anchor" href="#plotmedianhouseholdincome"></a>
 </h4>
+<p>This function is used to plot the county level median household income of the selected state in 2019.</p>
+<p>The required aesthetics are:</p>
+<ul>
+<li>
+<code>file</code>: The clean up file from USDA site</li>
+<li>
+<code>State.name</code>: Selected state abbreviation, such as “IA”.</li>
+</ul>
+<p>The example below shows the county level median household income in Mississipp in 2019.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co">## 2019 median household income in county level for a specific state.</span>
-<span class="fu"><a href="../reference/plotmedianhouseholdincome.html">plotmedianhouseholdincome</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"NJ"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotmedianhouseholdincome.html">plotmedianhouseholdincome</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"MS"</span><span class="op">)</span></code></pre></div>
 <p><img src="group-vignette_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p>We classify the median household income (in thousands) into 5 levels: VeryLow (&lt;24), Low (24 ~ 40), Medium (40 ~ 55), High (55 ~ 70) and VeryHigh (70 ~ 150) and fill the color as red, light red, grey, light blue and blue.</p>
 </div>
 <div class="section level4">
 <h4 id="plotunemployed_animation">plotunemployed_animation<a class="anchor" aria-label="anchor" href="#plotunemployed_animation"></a>
 </h4>
+<p>This function is used to provide the animation plot of the county level unemployment rate of the selected state from 2000 to 2020.</p>
+<p>The required aesthetics are:</p>
+<ul>
+<li>
+<code>file</code>: The clean up file from USDA site</li>
+<li>
+<code>State.name</code>: Selected state abbreviation, such as “IA”.</li>
+</ul>
+<p>The example below shows the animation plot of the county level unemployment rate in Iowa from 2000 to 2020.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotunemployed_animation.html">plotunemployed_animation</a></span><span class="op">(</span><span class="va">file</span>, <span class="st">"IA"</span><span class="op">)</span></code></pre></div>
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-6-1.gif"><!-- --></p>
+<p>This function has the same levels as the function <code>plotunemployed</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="missing-values-and-other-issues">Missing values and other issues<a class="anchor" aria-label="anchor" href="#missing-values-and-other-issues"></a>
+</h4>
+<p>There are several data issues:</p>
+<ul>
+<li>7 counties in LA did not collect UR in 2005 and 2006.</li>
+<li>Some Census Areas in AK were not existed before 2010.</li>
+<li>The USDA dataset does not contain Kalawao County in HI.</li>
+</ul>
+<p>To solve this problem, we add these counties in the raw data, set the missing URs as NA and fill the counties as black color.</p>
+<p>The example below shows the county level unemployment rate in LA in 2005.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotunemployed.html">plotunemployed</a></span><span class="op">(</span><span class="va">file</span>, <span class="fl">2005</span>, <span class="st">"LA"</span><span class="op">)</span></code></pre></div>
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>There are some blank unemployment rate values in lower right corner in LA in 2005</p>
 </div>
 </div>
 <div class="section level3">
@@ -190,9 +233,9 @@
 <code>local.name</code>: Selected state in the data. If it’s not a vaild state name, it shows “Error! Not a state!”</li>
 </ul>
 <p>The example shows unemployment rate in IA along with years.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotunemployed_time.html">plotunemployed_time</a></span><span class="op">(</span><span class="va">file</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
-<p><img src="group-vignette_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>We use the state level data for this unemployment rate vs time plot. We also compared the state level unemployment rate with the whole nation, to figure out whether the chosen state has a different trend compared with the whole nation.</p>
 </div>
 <div class="section level4">
@@ -209,9 +252,9 @@
 <code>State.name</code>: Selected state in the data. If it’s not a vaild state name, it shows “Error! Not a state!”</li>
 </ul>
 <p>The example shows top 10 unemployed counties in IA in 2011 histogram.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/stateunemployed.html">stateunemployed</a></span><span class="op">(</span><span class="va">file</span>,<span class="fl">2011</span>,<span class="st">"IA"</span><span class="op">)</span></code></pre></div>
-<p><img src="group-vignette_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="group-vignette_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>We rank the top 10 counties in Iowa state. The histogram represent the unemployment population in each county, and later in shiny app, for each county we calculate the weight of this population in whole state.</p>
 </div>
 </div>
@@ -235,7 +278,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>
