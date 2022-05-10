@@ -8,6 +8,7 @@ file = dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.
   filter(!State %in% c("PR"))
 
 StateList <- unique(file$State) %>% sort()
+StateList<-StateList[-which(StateList=="DC")]
 YearList <- unique(file$year) %>% sort()
 #AreaList <- unique(file$Area_name) %>% sort()
 
