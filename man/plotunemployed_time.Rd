@@ -23,5 +23,5 @@ file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.cs
 plotunemployed_time(file, "IA")
 }
 \author{
-Lin Quan Zirou Zhou
+Lin Quan
 }

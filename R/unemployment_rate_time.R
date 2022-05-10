@@ -7,7 +7,7 @@
 #' file=dataclean("https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.csv")
 #'
 #' plotunemployed_time(file, "IA")
-#' @author Lin Quan Zirou Zhou
+#' @author Lin Quan
 #' @import tidyr ggplot2
 #'
 plotunemployed_time <- function(file, local.name){
