@@ -119,6 +119,24 @@ plotunemployed_animation(file, "IA")
 
 This function has the same levels as the function `plotunemployed`. 
 
+#### Missing values and other issues 
+
+There are several data issues: 
+
+- 7 counties in LA did not collect UR in 2005 and 2006. 
+- Some Census Areas in AK were not existed before 2010.
+- The USDA dataset does not contain Kalawao County in HI.
+
+To solve this problem, we add these counties in the raw data, set the missing URs as NA and fill the counties as black color.  
+
+The example below shows the county level unemployment rate in LA in 2005.
+
+```{r,warning=FALSE, message=F}
+plotunemployed(file, 2005, "LA")
+```
+
+There are some blank unemployment rate values in lower right corner in LA in 2005
+
 ## Plotting the data
 
 ### plotunemployed_time
